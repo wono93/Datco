@@ -58,6 +58,9 @@ input {
 #btn {
 	margin: 30px 0 9px;
 }
+.leave_title{
+	text-align:center;
+}
 
 </style>
 </head>
@@ -66,14 +69,15 @@ input {
 		name="leaveFrm" method="post">
 		<div id="registerContainer">
 			<div class="content">
+			<h1 class="leave_title">회원탈퇴</h1>
 				<h3 class="title">
 					<label for="password">패스워드</label>
 				</h3>
 				<input type="password" id="password" name="password" maxlength="16"> <span
 					id="pwdMsg"></span>
 				<div id="btn">
-					<input type="button" id="submit" value="탈퇴하기" onclick="deleteUser();">
-					<input type="button" id="cancel" value="취소" />
+					<input type="button" id="submit" value="탈퇴하기" onclick="return deleteUser();">
+					<input type="button" id="cancel" value="취소" onclick="return deleteCancel();"/>
 				</div>
 			</div>
 		</div>
@@ -81,10 +85,20 @@ input {
 
 <script>
 function deleteUser(){
+	let password = $("#password").val().trim();
+	
+	if(password == ""){
+		$("#password").focus();
+		return false
+	}
 	if(!confirm("정말로 탈퇴하시겠습니까?"))
 		return;
 		
 		$("[name=leaveFrm]").submit();
+		return true;
+}
+function deleteCancel(){
+	location.href="<%=request.getContextPath()%>/mypage/userEdit?userId=<%=userLoggedIn.getUserId()%>";
 }
 </script>
 </body>

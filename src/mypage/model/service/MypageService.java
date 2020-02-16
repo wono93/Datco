@@ -93,5 +93,4 @@ public class MypageService {
 		
 		return point;
 	}
-
 }

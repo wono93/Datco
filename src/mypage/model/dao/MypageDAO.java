@@ -231,6 +231,7 @@ public class MypageDAO {
 		return list;
 	}
 	
+
 	public Point getPoint(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 	

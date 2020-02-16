@@ -272,8 +272,6 @@ public class UserDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
-		
 		return u;
 	}
 
@@ -299,10 +297,9 @@ public class UserDAO {
 		} finally {
 			close(pstmt);
 		}
-		
 		return result;
 	}
-	
+
 	public User selectOnebyNick(Connection conn, String nickName) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -310,12 +307,10 @@ public class UserDAO {
 		String query = "select * from tb_user where nickname = ?";
 		User u = null;
 		System.out.println("query@="+query);
-		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, nickName);
 			rset = pstmt.executeQuery();
-			
 			while(rset.next()) {
 				u = new User();
 				u.setUserId(rset.getString("userId"));
@@ -338,5 +333,6 @@ public class UserDAO {
 		return u;
 	}
 
-	
+
+
 }

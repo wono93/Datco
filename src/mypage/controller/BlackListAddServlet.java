@@ -59,6 +59,7 @@ public class BlackListAddServlet extends HttpServlet {
 		if(exist == null) {
 			// 존재하지 않는 차단 유저일 경우 insert통해 추가.
 			BlackList getbl = new BlackList(userId, blackId, null, memo);
+//					System.out.println(getbl.toString());
 			int result = new MypageService().addBlackList(getbl);
 
 			if (result > 0) {

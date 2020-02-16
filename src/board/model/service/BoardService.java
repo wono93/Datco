@@ -234,5 +234,37 @@ public class BoardService {
 		return result;
 	}
 
+    public int myCmtTotal(String userId) {
+		//특정 유저의댓글 갯수 가져오기
+		Connection conn = getConnection();
+		int myCmtTotal= new BoardDAO().myCmtTotal(conn, userId);
+		
+		close(conn);
+		return myCmtTotal;
+	}
+
+	public List<Board> myCurrentBoard(String userId) {
+		//특정 유저의 최근 작성글  5개 가져오기
+		Connection conn = getConnection();
+	
+		List<Board> myCurBoardt= new BoardDAO().myCurrentBoard(conn, userId);
+		close(conn);
+		return myCurBoardt;
+	}
+
+	public int myBoardTotal(String userId) {
+		//특정 유저의 게시글 갯수 가져오기
+		Connection conn = getConnection();
+		int myBoardTotal= new BoardDAO().myBoardTotal(conn, userId);
+				
+		close(conn);
+		return myBoardTotal;
+	}
+
+	public List<DelBoard> selectRepBoardList(int cPage, int numPerPage, int reportcount) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

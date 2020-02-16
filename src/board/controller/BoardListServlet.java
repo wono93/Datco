@@ -20,7 +20,7 @@ import board.model.vo.DelBoard;
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BoardService boardService = new BoardService();
-
+	private static final int REPORTCOUNT = new BoardReportServlet().REPORTCOUNT;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -61,13 +61,13 @@ public class BoardListServlet extends HttpServlet {
 			//신고게시판 -> 신고수 10개 이상인 것만 보여주기
 			totalBoardCount = new BoardService().selectDelBoardCount();
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
-			dlist = boardService.selectDelBoardList(cPage, numPerPage, new BoardReportServlet().REPORTCOUNT);
+			dlist = boardService.selectRepBoardList(cPage, numPerPage, REPORTCOUNT);
 			
 		}else if("DEL".equals(boardCode)) {
 			//삭제게시판 -> 신고수 10개 미만인 것만 보여주기
 			totalBoardCount = new BoardService().selectDelBoardCount();
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
-			dlist = boardService.selectDelBoardList(cPage, numPerPage, 0);
+			dlist = boardService.selectDelBoardList(cPage, numPerPage, REPORTCOUNT);
 		}else {
 			totalBoardCount = new BoardService().selectBoardCount(boardCode);
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);

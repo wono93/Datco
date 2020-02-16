@@ -116,10 +116,10 @@ input {
 			
 		
 	}
-	function editValidate(){
+	function updateUser(){
 		if ( $("#nickName").val().trim() == ""|| $("#email").val().trim() == ""
 			|| $("#phone").val().trim() == "" || $("#address").val().trim() == "") {
-
+			
 		return false;
 		}
 		return true;
@@ -133,13 +133,13 @@ input {
 	$("#nickName").keyup(function() {
 		var nickName = $("#nickName").val();
 		
-		var regnick = "";
+		var regnick = /[가-힣]{2,6}/gi;;
 		if (!regnick.test(nickName)) {
-			$("#nickMsg").text("닉네임.");
+			$("#nickMsg").text("한글로 2글자이상 6글자까지 사용하세요.");
 			$("#nickMsg").css("color", "red");
 			
 		}else{
-			$("#nickMsg").hide();
+			$("#nickMsg").text("");
 		}
 
 		
@@ -148,13 +148,13 @@ input {
 	$("#email").keyup(function(){
 		var email = $("#email").val();
 
-		var regemail = 	/^[A-Za-z0-9\_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z]{2,}/;
+		var regemail = 	/^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (!regemail.test(email)) {
 			$("#emailMsg").text("이메일을 확인해주세요.");
 			$("#emailMsg").css("color", "red");
 			
 		}else{
-			$("#emailMsg").hide();
+			$("#emailMsg").text("");
 		}
 
 		
@@ -168,7 +168,7 @@ input {
 			$("#phoneMsg").css("color", "red");
 			
 		}else{
-			$("#phoneMsg").hide();
+			$("#phoneMsg").text("");
 		}
 
 		

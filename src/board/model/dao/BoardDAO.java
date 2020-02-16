@@ -470,6 +470,7 @@ public class BoardDAO {
 				b.setDelRepDate(rset.getDate("DEL_REP_date"));
 				list.add(b);
 			}
+			System.out.println(list.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
