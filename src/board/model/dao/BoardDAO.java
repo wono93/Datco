@@ -677,7 +677,6 @@ public class BoardDAO {
 				b.setDelRepDate(rset.getDate("DEL_REP_date"));
 				list.add(b);
 			}
-			System.out.println(list.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -702,9 +701,64 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			close(rset);
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public DelBoard selectDelBoard(Connection conn, int boardNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		DelBoard dBoard = null;
+		String query = prop.getProperty("selectDelBoard");
+		/*
+    board_no NUMBER NOT NULL, 
+    userId VARCHAR2(20) NOT NULL, 
+    boardCode CHAR(3) NOT NULL,  --게시판코드
+    boardOption VARCHAR2(10) NOT NULL,  --게시글말머리
+    boardTitle VARCHAR2(100) NOT NULL, 
+    boardContent CLOB NOT NULL, 
+    originalFileName VARCHAR2(20) NULL, 
+    renamedFileName VARCHAR2(20) NULL,
+    readCount NUMBER NOT NULL, 
+    selectedCount NUMBER NOT NULL, 
+    reportedCount NUMBER NOT NULL, 
+    boardRegDate DATE NOT NULL, 
+    cmtselect CHAR(1) NOT NULL, 
+    userGrade VARCHAR2(10) NOT NULL, 
+    DEL_REP_date DATE default sysdate NOT NULL, 
+    DELorREP CHAR(3) NOT NULL, 
+		 */
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, boardNo);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				dBoard = new DelBoard();
+				dBoard.setBoardWriter(rset.getString("userId"));
+				dBoard.setBoardWriterGrade(rset.getString("userGrade"));
+				dBoard.setBoardCode(rset.getString("boardCode"));
+				dBoard.setBoardOption(rset.getString("boardOption"));
+				dBoard.setBoardTitle(rset.getString("boardTitle"));
+				dBoard.setBoardContent(rset.getString("boardContent"));
+				dBoard.setOriginalFileName(rset.getString("originalFileName"));
+				dBoard.setRenamedFileName(rset.getString("renamedFileName"));
+				dBoard.setReadCnt(rset.getInt("readCount"));
+				dBoard.setSelectedCnt((rset.getInt("selectedCount")));
+				dBoard.setReportedCnt(rset.getInt("reportedCount"));
+				dBoard.setBoardRegDate(rset.getDate("boardRegDate"));
+				dBoard.setCmtSelect(rset.getString("cmtselect"));
+				dBoard.setPoint(rset.getInt("point"));
+				dBoard.setDelRepDate(rset.getDate("DEL_REP_date"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return dBoard;
 	}
 
 }

@@ -1,6 +1,7 @@
 package board.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,7 @@ public class BoardListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//파라미터에 boardcode 읽어와서 분기처리.
-		final int numPerPage = 20;//한페이지당 수
+		final int numPerPage = 10;//한페이지당 수
 		int cPage = 1;//요청페이지
 		
 		String boardCode = request.getParameter("boardCode");
@@ -51,12 +52,11 @@ public class BoardListServlet extends HttpServlet {
 		List<Board> list = null;
 		List<DelBoard> dlist = null;
 		
-		String pageBar = "";	
-		final int pageBarSize = 10;
+		String pageBar = "<ul class='pagination' id='pagingNumber'>";	
+		final int pageBarSize = 5;
 		int pageStart = ((cPage - 1)/pageBarSize) * pageBarSize +1;
 		int pageEnd = pageStart+pageBarSize-1;
 		int pageNo = pageStart;
-		
 		if("REP".equals(boardCode)){
 			//신고게시판 -> 신고수 10개 이상인 것만 보여주기
 			totalBoardCount = new BoardService().selectRepBoardCount(REPORTCOUNT);
@@ -72,36 +72,55 @@ public class BoardListServlet extends HttpServlet {
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
 			list = boardService.selectBoardList(cPage, numPerPage, boardCode);
 		}
-		
 
-		
 		if(pageNo == 1 ){
-			pageBar += "<span>[이전]</span>"; 
+			pageBar += 	"";
 		}
 		else {
-			pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+(pageNo-1)+"'>[이전]</a> ";
+			pageBar += "<li class='page-item'>"
+					+  "	<a class='page-link' href='"+request.getContextPath()+"/board/boardList?boardCode="+boardCode+"&cPage="+(pageNo-1)+"'>이전</a> "
+					+  "</li>";
 		}
 			
 		while(!(pageNo>pageEnd || pageNo > totalPage)){
 			
 			if(cPage == pageNo ){
-				pageBar += "<span class='cPage'>"+pageNo+"</span> ";
+				pageBar += 	" <li class='page-item active' aria-current='page'>" 
+						+	"	<span class='page-link'>" + cPage 
+						+   "	<span class='sr-only'>(current)</span>" 
+						+	"   </span>"  
+						+ 	"</li>";
 			} 
 			else {
-				pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>"+pageNo+"</a> ";
+				pageBar += 	"<li class='page-item'>"
+						+ 	"	<a class='page-link' href='" + request.getContextPath()+"/board/boardList?boardCode="+boardCode+"&cPage="+pageNo+"'>"
+						+ 	pageNo+ "</a>"
+						+ 	"</li>";
 			}
 			pageNo++;
 		}
 		
 		if(pageNo > totalPage){
-			pageBar += "<span>[다음]</span>";
+			pageBar += "";
 		} else {
-			pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>[다음]</a>";
+			pageBar += 	"<li class='page-item'>" 
+					+	"      <a class='page-link' href='"+request.getContextPath()+"/board/boardList?boardCode="+boardCode+"&cPage="+pageNo+"'>"
+					+ 	"다음</a>" 
+					+	"</li>";
 		}
-		if(list!=null) request.setAttribute("list", list);
-		else if(dlist!=null) request.setAttribute("list", dlist);
-		request.setAttribute("pageBar", pageBar);
-		request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp").forward(request, response);
+		pageBar += "</ul>";
+		if(list!=null) {
+			System.out.println("11");
+			request.setAttribute("list", list);
+			request.setAttribute("pageBar", pageBar);
+			request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp").forward(request, response);
+		}
+		else if(dlist!=null) {
+			System.out.println("2");
+			request.setAttribute("dlist", dlist);
+			request.setAttribute("pageBar", pageBar);
+			request.getRequestDispatcher("/WEB-INF/views/board/adminBoardList.jsp").forward(request, response);
+		}
 	}
 
 

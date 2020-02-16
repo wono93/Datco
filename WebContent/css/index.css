@@ -72,13 +72,6 @@ a.codereple,a.findjob{
     align-items: center;
     width: 100%;
 }
-a{
-    text-decoration: none;
-    cursor:pointer;
-}
- a:visited{
- 	color:black;
- }
 /*header 끝  */
 /*index 시작  */
 .content_main{
@@ -119,7 +112,14 @@ a{
     opacity: .9;
     background-color:white;
 }
+a{
+    text-decoration: none;
+    cursor:pointer;
+}
 
+ a:visited{
+ 	color:black;
+ }
 .section_list.searchlist {
     min-height: 421px;
 }

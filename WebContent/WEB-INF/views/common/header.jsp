@@ -6,23 +6,7 @@
 
 	User userLoggedIn = (User)session.getAttribute("userLoggedIn");
 		
-	Cookie[] cookies = request.getCookies();
-	boolean saveIdChecked = false;
-	String userId = "";
 	
-	if(cookies != null){
-		//System.out.println("cookies@header.jsp");
-		
-		for(Cookie c : cookies){
-			String name = c.getName();
-			String value = c.getValue();
-			
-			if("saveId".equals(name)){
-				saveIdChecked = true;
-				userId = value;
-			}
-		}
-	}
 	boolean squBool = false;
 	boolean cdrBool = false;
 	boolean jobBool = false;

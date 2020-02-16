@@ -54,10 +54,13 @@ public class BoardRegistEndServlet extends HttpServlet {
 
 		//코드리플게시판 boardContent = boardContent + codeContent JSON으로 담기
 		if("CDR".equals(boardCode)) {
-			String CodeContent = request.getParameter("codeContent");
+			String codeContent = request.getParameter("codeContent");
+			codeContent = boardContent.replaceAll("<", "&lt;")
+					   .replaceAll(">", "&gt;")
+					   .replaceAll("\\n", "<br>");
 			List<String> list = new ArrayList<>();
 			list.add(boardContent);
-			list.add(CodeContent);
+			list.add(codeContent);
 			
 			String jsonContent = new Gson().toJson(list);
 			boardContent = jsonContent;

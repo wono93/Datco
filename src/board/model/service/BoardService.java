@@ -275,5 +275,12 @@ public class BoardService {
 		return result;
 	}
 
+	public DelBoard selectDelBoard(int boardNo) {
+		Connection conn = getConnection();
+		DelBoard dBoard = new BoardDAO().selectDelBoard(conn, boardNo);
+		close(conn);
+		return dBoard;
+	}
+
 
 }
