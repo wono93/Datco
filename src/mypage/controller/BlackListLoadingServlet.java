@@ -38,9 +38,9 @@ public class BlackListLoadingServlet extends HttpServlet {
 		
 		String userId = request.getParameter("userId");
 		List<BlackList> blackList = new MypageService().selectBlackList(userId);
+		String gsonblist = new Gson().toJson(blackList);
 
 		
-		String gsonblist = new Gson().toJson(blackList);
 			
 		response.setContentType("application/json; charset=utf-8");
 		PrintWriter out = response.getWriter();

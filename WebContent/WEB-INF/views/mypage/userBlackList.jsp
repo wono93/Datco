@@ -101,7 +101,10 @@ $("#btn_add").click(function(){
 	};
 	let $userId = $("[name=delUserId]").val();
 	console.log($userId);
-	
+	if(userLoggedin.getUserId == blackList.userId){
+		alert('본인은 차단 할 수 없습니다');
+	 	return;
+	}
 	console.log(blackList);
 	$.ajax({
 		url:"<%=request.getContextPath()%>/mypage/userBlackListAdd.do",
@@ -109,9 +112,7 @@ $("#btn_add").click(function(){
 		dataType: "json",
 		success : function(data) {
 			console.log(data);
-			if(userLoggedin.getUserId == userId){
-				alert('본인은 차단 할 수 없습니다');
-			}else if(data == 'exist'){
+			if(data == 'exist'){
 				alert('이미 존재하는 차단유저 입니다.');
 			}else if(data == 'insertfail'){
 				alert('차단에 실패하였습니다 관리자에게 문의해주세요');
@@ -123,8 +124,9 @@ $("#btn_add").click(function(){
 					  
 					  console.log($delLoc);
 					  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
-                    "<td name='memo'>"+blackUser.memo+"</td>"+
-                    "<td>"+blackUser.regDate+"</td>"+
+					 <%--  "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.userGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.nickName+" </td>--%>	
+					  "<td name='memo'>"+blackUser.memo+"</td>"+
+					  "<td>"+blackUser.regDate+"</td>"+
                     "<td><input type='image' src='<%=request.getContextPath()%>/images/crossred.png' onclick=\""+$delLoc+"\" value='삭제'></td></tbody></tr>";
 					  });
 				  blackList+="</tbody>";

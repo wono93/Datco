@@ -116,9 +116,9 @@ p {
 				<ul class="navi">
 					<li>회원정보 조회 / 수정/ 회원탈퇴</li>
 					<li>나의 글 보기</li>
-					<li onclick="blackListInquery()">나의 댓글 보기</li>
-					<li>블랙리스트 조회</li>
-					<li>스크랩 조회</li>
+					<li>나의 댓글 보기</li>
+					<li onclick="blackListInquery()">블랙리스트 조회</li>
+					<li onclick="scrapInquery();">스크랩 조회</li>
 					<li>쪽지함</li>
 				</ul>
 			</nav>
@@ -173,7 +173,7 @@ p {
 			</div>
 			</article>
 			<article>
-			<div id="usermenu">
+			<div id="usermenu" onclick="scrapInquery();">
 				<table id="menuinner">
 					<tr>
 						<th>스크랩 조회</th>
@@ -207,10 +207,14 @@ $(function(){
 
 function blackListInquery(){
 	let url = "<%=request.getContextPath()%>/mypage/userBlackList?userId=<%=userLoggedIn.getUserId()%>";
-	open(url, "blackList", "left= 100px, top=100px, width=820px, height=400px");
+	open(url, "blackList", "left= 100px, top=100px, width=820px, height=500px");
 	console.log('dkdkdkdkd');
 }
-
+function scrapInquery(){
+	let url = "<%=request.getContextPath()%>/mypage/scrap?userId=<%=userLoggedIn.getUserId()%>";
+	open(url, "ScrapList", "left= 100px, top=100px, width=820px, height=400px");
+	console.log('dkdkdkdkd');
+}
 function userEdit(){
 	location.href = "<%=request.getContextPath()%>/mypage/userEdit?userId=<%=userLoggedIn.getUserId()%>";
 }

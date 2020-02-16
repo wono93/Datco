@@ -40,7 +40,7 @@ public class UserUpgradeServlet extends HttpServlet {
 		
 		if("A".equals(userRole)) {
 			result = new UserService().updateUserRole(userId, "U");
-		}else if("U".equals(userRole)) {
+		}else {
 			result = new UserService().updateUserRole(userId, "A");			
 		}
 		

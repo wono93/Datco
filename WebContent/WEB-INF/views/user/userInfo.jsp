@@ -72,7 +72,7 @@ form#eachuser {
 				</tr>
 				<tr>
 					<td>닉네임:</td>
-					<td><%=user.getNickName() %></td>
+					<td><img src='<%=request.getContextPath()%>/images/"+blackUser.userGrade+"' alt='' style='width:20px;' class='message_box'><%=user.getNickName() %></td>
 					
 					<td>아이디:</td>
 					<td><%=user.getUserId() %></td>
@@ -94,16 +94,19 @@ form#eachuser {
 				</tr>
 				<!-- 버튼태그는 유저따라 보여주기.-->
 				<tr>
-					<td colspan='2'> </td>
 					<%if("S".equals(userLoggedIn.getUserRole() ) ){ %>
-					<td>권한변경</td>
-						<td>
+					<td>유저권한 :</td>
+					<td><%=user.getUserRole() %></td>
+						<td colspan='2'>
 						<% if("A".equals(user.getUserRole() ) ){%>
-						<button onclick='rolechange()' value='U'>일반유저로 변경</button>
+						<button onclick='rolechange()'> 일반유저로변경</button>
+						<input type="hidden" value="U" />
 						<%}else{ %>
-						<button onclick='rolechange()' value='A'>관리자로 변경</button>
+						<button onclick='rolechange()'>관리자로변경</button>
+						<input type="hidden" value="A" />
 						</td>
 					<%}}else{ %>
+					<td colspan='2'> </td>
 					<td>차단 유저 등록</td>
 					<td><button onclick='addtoBlackList()'>추가하기</button></td>
 					<%} %>
@@ -133,23 +136,25 @@ form#eachuser {
 					}
 				});
 		}		
-		function rolechage(){
+		function rolechange(){
 			let rolech = {
 					userId : '<%=user.getUserId()%>',
-					userRole : '<%=user.getUserRole()%>'
+					userRole :'<%=user.getUserRole()%>'
 			}
+		
+			console.log(rolech);
 			$.ajax({
 				url:"<%=request.getContextPath()%>/user/userUpgrade",
 				data: rolech,
 				dataType: "json",
 				success : function(data) {
 					
-					alert('업데이트 완료, 자세한 사항은 차단회원에서 조회해주세요');
-					
+					alert('업데이트 완료');
+					window.open.reload();
 				},
 				error: function(x,s,e){
 					console.log(x,s,e);
-		
+				}
 			});
 			
 			
