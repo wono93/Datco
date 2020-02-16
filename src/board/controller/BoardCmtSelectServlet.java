@@ -41,13 +41,16 @@ public class BoardCmtSelectServlet extends HttpServlet {
 		selc.setCmtNo(cmtNo);
 		
 		int result = new BoardService().updateSelectCmt(selc); 
-		
-		if(result>0) {
-			int rPoint = new MypageService().insertPointLog(userId, selc.getPoint(),"답글채택");
 			
-		}
-		
 		String msg = result>0?"답변채택 성공! 채택하신 답변자에게 포인트가 지급됩니다!":"답변채택 실패!";
+			
+			if(result>0) {
+				
+				int rPoint = new MypageService().insertPointLog(userId, selc.getPoint(),"답글채택");
+				
+		}
+			
+		
 		String loc = "/board/boardView?boardNo="+boardNo;
 		request.setAttribute("loc", loc);
 		request.setAttribute("msg", msg);

@@ -74,16 +74,18 @@ public class BoardViewServlet extends HttpServlet {
 		Board board = new BoardService().selectBoardNo(boardNo, hasRead);
 		//System.out.println("board.getBoardCode()@ViewServlet="+board.getBoardCode());
 		List<BoardComment> commentList = new BoardService().selectCommentList(boardNo);
+		SelectedComment selc = null;
 		if("CDR".equals(board.getBoardCode()) && 
 				(board.getCmtSelect().equals("Y"))){
 			//코드리플의 채택된 댓글이 있다면 select으로 cmt번호 전달하기
-			SelectedComment selc = new BoardService().selectSelectedCmt(board.getBoardNo());
+			selc = new BoardService().selectSelectedCmt(board.getBoardNo());
 			if(selc.getCmtNo() != 0)
 				request.setAttribute("select", selc.getCmtNo());
 		}
 		
 		if(board != null) {
 			request.setAttribute("board", board);
+			request.setAttribute("selc", selc);
 			request.setAttribute("commentList", commentList);
 			request.getRequestDispatcher("/WEB-INF/views/board/boardView.jsp").forward(request, response);
 			

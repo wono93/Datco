@@ -1,3 +1,4 @@
+<%@page import="board.model.vo.SelectedComment"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="board.model.vo.BoardComment"%>
 <%@page import="java.util.List"%>
@@ -16,6 +17,8 @@
 	List<String> contentList  = null;
 	if(CDRbool)
 		contentList = new Gson().fromJson(b.getBoardContent(), List.class);
+	
+	SelectedComment sc = (SelectedComment)request.getAttribute("selc");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <script src="<%=request.getContextPath()%>/codemirror/lib/codemirror.js"></script>
@@ -97,12 +100,12 @@
 				return;
 			location.href = "<%=request.getContextPath()%>/board/boardCmtSelect?cmtNo="+$(this).val()+"&boardNo=<%=b.getBoardNo()%>";
 		});
-		$(".btn-reply").find($(".btn-outline-danger")).click(function(){
+		$(".btn-reply").find($(".btn-outline-danger, .btn-danger")).click(function(){
 			if(!confirm('정말 삭제하시겠습니까?'))
 				return;
 			location.href = "<%=request.getContextPath()%>/board/boardCmtDel?cmtNo="+$(this).val()+"&boardNo=<%=b.getBoardNo()%>";
 		});
-	 	$(".btn-reply").find($(".btn-primary")).on("click",function(){
+	 	$(".btn-reply").find($(".btn-primary, .btn-light")).on("click",function(){
 	 	<% if(userLoggedIn != null) {%>
 	 		//현재댓글 번호
 	 		var boardCommentNo = $(this).val();
@@ -144,6 +147,10 @@
  			<% } %>
  		});
 		$("#code-click").trigger("click");
+		
+		
+		
+		
 	});
 		function updateBoard(){
 			location.href = "<%=request.getContextPath()%>/board/boardRegist?boardNo=<%=b.getBoardNo()%>";
@@ -159,6 +166,10 @@
 				if(!confirm("정말 신고하시겠습니까?\n(허위신고시 처벌받을 수 있습니다.)"))
 					return;
 				$("[name=rpt]").submit();
+		}
+		/* 스크랩 */
+		function scrap(){
+				$("[name=scrap]").submit();
 		}
 		function loginAlert(){
 		 	alert("로그인 후 이용하실 수 있습니다.");
@@ -203,46 +214,39 @@
 	</div>
 	<div id="boardcontent" class="boardview">
 		<div id="boardinfo" class="boardview">
-			<!-- 게시글제목(일정 길이 넘어갈 시 폰트사이즈 조절) -->
-			<%if(b.getBoardTitle().length() > 10 && b.getBoardTitle().length() < 20) {%>
-			<div name="boardTitle" id="boardTitleM"><%=b.getBoardTitle() %>
-			<% } else if(b.getBoardTitle().length() >= 20) {%>
-			<div name="boardTitle" id="boardTitleL"><%=b.getBoardTitle() %>
-			<% } else { %>
-			<div name="boardTitle" id="boardTitleS"><%=b.getBoardTitle() %>
-			<% } %>
+			<!-- 게시글제목 -->
+			<p><div name="boardTitle" id="boardTitleM"><%=b.getBoardTitle() %>
 				<!-- 스크랩 -->
 				<div id="scrap">
-					<button type="button" class="btn btn-primary" name="scrap">
-					<%-- <% if(userLoggedIn.getBoardScrap() != this.getBoardScrap()) {%>
-					<!-- 스크랩 중 -->
-						<i class="fas fa-bookmark"></i>
-					<% } else {%>--%>
-					<!-- 스크랩 안함 -->
-						<i class="far fa-bookmark"></i>
-					<%-- <% } %> --%>
-			   			<span class="badge badge-light">9</span>
-			  			<span class="sr-only">스크랩 수</span>
+				<% if(userLoggedIn != null) {%>
+					<form action="<%=request.getContextPath()%>/mypage/scrapAdd" method="POST" name="scrap" >
+					<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId()%>" />
+					<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" />
+					<button class="btn btn-primary" name="scrap" onclick="scrap();"><i class="fas fa-bookmark"></i>
 					</button>
+					</form>
+					<% } %>
 				</div>
+			</div></p>
+			<div id="rpt">
+				<!--게시글 신고하기 -->
+				<% if(userLoggedIn!=null){%>
+				<form action="<%=request.getContextPath()%>/board/boardReport" method="POST" name="report">
+					<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" />
+					<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId()%>" />
+					<input type="hidden" name="boardCode" value="<%=b.getBoardCode() %>" />
+					<a onclick="reportBoard();"><i id="rpt" class="far fa-angry"></i></a>
+				</form>
+				<%} %>
 			</div>
-			<!--게시글 신고하기 -->
-			<% if(userLoggedIn!=null){%>
-			<form action="<%=request.getContextPath()%>/board/boardReport" method="POST" name="report">
-				<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" />
-				<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId()%>" />
-				<input type="hidden" name="boardCode" value="<%=b.getBoardCode() %>" />
-				<a onclick="reportBoard();"><i class="far fa-angry"></i></a>
-			</form>
-			<%} %>
 			<!-- 조회수 -->
 			<div name="boardCount" id="boardCount">
-				<img src="<%=request.getContextPath()%>/images/eye.png" alt="" width="26px"/>
+				<img src="<%=request.getContextPath()%>/images/eye.png" alt="" width="23px"/>
 				<%=b.getReadCnt() %>
 			</div>
 			<!-- 작성날짜 -->
 			<span class="badge badge-pill badge-secondary"><%=b.getBoardRegDate() %></span>
-		</div>
+	</div>
 		<!-- 내용 -->
 		<div id="content" class="boardview">
 			<div class="form-group  has-feedback"><hr />
@@ -255,13 +259,6 @@
 			        <pre class="code-sql"  name="codeContent" style="display:none;"><%=CDRbool?contentList.get(1):""%></pre>
 		        </div>
 			</div>
-		<%-- <div class="boardview">
-			<!-- 첨부파일이 있을경우만, 이미지와 함께 original파일명 표시 --> 
-			<%if(b.getRenamedFileName()!=null){ %>
-			<a href="javascript:fileDownload('<%=b.getOriginalFileName()%>','<%=b.getRenamedFileName()%>');">
-			<img alt="첨부파일" src="<%=request.getContextPath() %>/images/file.png" width=16px>:<%=b.getOriginalFileName() %></a>
-			<% } %>
-		</div> --%>
 		<% if(userLoggedIn!=null && (b.getBoardWriter().equals(userLoggedIn.getUserId())||"A".equals(userLoggedIn.getUserRole()))){%>
 		<div class="boardview">
 			<!-- 작성자와 관리자에게만 수정/삭제버튼 표시 -->
@@ -288,27 +285,50 @@
 					if(bc.getCmtLevel()==1){
 			%>
 			<tr class="level1">
+				<!-- 채택된 답변 -->
+				<% if(b.getBoardCode().equals("CDR") && b.getCmtSelect().equals("Y") && bc.getCmtNo() == sc.getCmtNo()){%>
+				<td style="background-color: #007bff; color: white;">
+					<sub class="comment-writer" style="color: white;"><%=bc.getCmtWriter() %></sub>
+					<sub class="comment-date"><%=bc.getCmtRegDate() %></sub>
+					<hr />
+					<sub class="comment-content"><%=bc.getCmtContent() %></sub>
+					<p>[해당 답변은 채택된 답변입니다.]</p>
+				</td>
+				<td class="btn-reply" style="background-color: #007bff; color: white;">
+					<!-- 답글버튼 -->
+					<button class="btn btn-light" style="margin:3px;" value="<%=bc.getCmtNo()%>">답글</button>
+					<!-- 삭제버튼(작성자와 관리자에게만 노출) -->
+					<% if(userLoggedIn!=null && 
+							 (bc.getCmtWriter().equals(userLoggedIn.getUserId()) ||
+							 "A".equals(userLoggedIn.getUserRole()))){ %>
+					<button class="btn btn-danger" style="margin:3px;" value="<%=bc.getCmtNo()%>">삭제</button>
+					<% } %>
+				</td>
+				<% } else {%>
+				<!-- 채택이 되지않은 답변 -->
 				<td>
 					<sub class="comment-writer"><%=bc.getCmtWriter() %></sub>
-					<sub class="comment-date"><%=bc.getCmtRegDate() %></sub><br />
-					<%=bc.getCmtContent() %>
+					<sub class="comment-date"><%=bc.getCmtRegDate() %></sub>
+					<!-- 신고하기 -->
+					<% if(userLoggedIn!=null){%>
+						<form action="<%=request.getContextPath()%>/board/boardReport" method="POST" name="rpt" id="rpt">
+							<input type="hidden" name="boardNo2" value="<%=bc.getBoardNo()%>" />
+							<input type="hidden" name="cmtNo" value="<%=bc.getCmtNo()%>" />
+							<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId()%>" />
+								<a onclick="reportComment();"><i class="far fa-angry"></i></a>
+						</form>
+					<% } %>
+					<hr />
+					<sub class="comment-content"><%=bc.getCmtContent() %></sub>
 				</td>
 				<td class="btn-reply">
 					<!-- 답글버튼 -->
-					<button  class="btn btn-primary" style="margin:3px;" value="<%=bc.getCmtNo()%>">답글</button>
-					<!-- 신고하기 -->
-					<% if(userLoggedIn!=null){%>
-					<form action="<%=request.getContextPath()%>/board/boardReport" method="POST" name="rpt">
-						<input type="hidden" name="boardNo" value="<%=bc.getBoardNo()%>" />
-						<input type="hidden" name="cmtNo" value="<%=bc.getCmtNo()%>" />
-						<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId()%>" />
-						<a onclick="reportComment();"><i class="far fa-angry"></i></a>
-					</form>
-					<%} %>
+					<button class="btn btn-primary" style="margin:3px;" value="<%=bc.getCmtNo()%>">답글</button>
+					
 					<!-- 채택버튼(코드리플게시판의 작성자에게만 노출) -->
 					<% if(userLoggedIn!=null && 
 						(b.getBoardWriter().equals(userLoggedIn.getUserId())) && 
-							b.getBoardCode().equals("CDR")){%>
+							b.getBoardCode().equals("CDR") && b.getCmtSelect().equals("N")){%>
 					<button class="btn btn-outline-success" style="margin:3px;" value="<%=bc.getCmtNo()%>">채택</button>
 					<% 	} %>
 					<!-- 삭제버튼(작성자와 관리자에게만 노출) -->
@@ -318,6 +338,7 @@
 					<button class="btn btn-outline-danger" style="margin:3px;" value="<%=bc.getCmtNo()%>">삭제</button>
 					<% } %>
 				</td>
+				<% } %>
 			</tr>
 			<%
 					} else {
