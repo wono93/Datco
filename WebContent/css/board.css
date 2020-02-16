@@ -8,6 +8,7 @@
 	overflow-y: hidden;
 	overflow-x: auto;
 }
+
 .btn {
 	padding: 6px 12px;
 	font-size: 14px;
@@ -59,6 +60,9 @@
 	display: none;
 }
 ////////////////////////////////////////////boardview////////////////////////////////////////////
+#selectedcmt{
+	background-color: blue;
+}
 #btn-comment {
 	padding: 6px 12px;
 	font-size: 12px;
@@ -87,6 +91,11 @@
 #button {
 	width: 100px;
 }
+#rpt{
+	float:right;
+	padding: 2px 5px 0 0;
+}
+
 #scrap {
 	float: right;
 }
@@ -97,20 +106,12 @@
 }
 #boardCount {
 	float: right;
-	width: 60px;
+	width: 47px;
 }
 
-#boardTitleS {
-	font-weight: 800;
-	font-size: 3em;
-}
 #boardTitleM {
 	font-weight: 800;
 	font-size: 2.5em;
-}
-#boardTitleL {
-	font-weight: 800;
-	font-size: 36px;
 }
 #content{
 	margin: 0 0 50px 0;
@@ -129,6 +130,9 @@
 	padding: 10px 10px;
 	border-radius: 5px;
 	background: white;
+}
+table#tbl-comment sub.comment-content {
+	font-size: 18px; 
 }
 #comment-container {
 	border: 1px solid gray;
@@ -186,7 +190,7 @@ table#tbl-comment tr:hover button.btn-reply {
 
 table#tbl-comment sub.comment-writer {
 	color: navy;
-	font-size: 14px
+	font-size: 15px
 }
 
 table#tbl-comment sub.comment-date {

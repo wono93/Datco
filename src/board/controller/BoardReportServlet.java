@@ -77,7 +77,7 @@ public class BoardReportServlet extends HttpServlet {
 			}
 		} else if(request.getParameter("cmtNo") != null) {
 			//boardView?boardNo 호출용
-			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			int boardNo2 = Integer.parseInt(request.getParameter("boardNo2"));
 			System.out.println("request.getParameter(\"cmtNo\")="+request.getParameter("cmtNo"));
 			
 			//댓글 신고
@@ -106,8 +106,8 @@ public class BoardReportServlet extends HttpServlet {
 				
 				if(moveResult > 0) {
 					//댓글삭제 후 게시판 돌아가기
-					boardNo = boardComment.getBoardNo();
-					request.setAttribute("boardNo", boardNo);
+					boardNo2 = boardComment.getBoardNo();
+					request.setAttribute("boardNo", boardNo2);
 					request.getRequestDispatcher("/board/boardView").forward(request, response);
 					return;
 				}

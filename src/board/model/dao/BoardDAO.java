@@ -502,40 +502,50 @@ public class BoardDAO {
 		ResultSet rset = null;
 		BoardComment bc = null;
 		/*
-		 * CREATE TABLE Tb_comment ( cmtNo NUMBER NOT NULL, userId VARCHAR2(20) NOT
-		 * NULL, board_no NUMBER NOT NULL, cmtLevel NUMBER default 1 NOT NULL, cmtRefNo
-		 * NUMBER NULL, cmtContent CLOB NULL, cmtRegDate DATE default sysdate NULL,
-		 * Recommended NUMBER default 0 NULL, reported NUMBER default 0 NULL, userGrade
-		 * VARCHAR2(10) NULL, CONSTRAINT TB_COMMENT_PK PRIMARY KEY (cmtNo) );
+		 CREATE TABLE Tb_comment
+			(
+			    cmtNo NUMBER NOT NULL, 
+			    userId VARCHAR2(20) NOT NULL, 
+			    board_no NUMBER NOT NULL, 
+			    cmtLevel NUMBER default 1 NOT NULL, 
+			    cmtRefNo NUMBER NULL, 
+			    cmtContent CLOB NULL, 
+			    cmtRegDate DATE default sysdate NULL, 
+			    Recommended NUMBER default 0 NULL, 
+			    reported NUMBER default 0 NULL, 
+			    userGrade VARCHAR2(10) NULL, 
+			    CONSTRAINT TB_COMMENT_PK PRIMARY KEY (cmtNo)
+			);
 		 */
 		String query = prop.getProperty("selectCmt");
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, cmtNo);
-			rset = pstmt.executeQuery();
-
-			if (rset.next()) {
-				bc = new BoardComment();
-				bc.setCmtNo(rset.getInt("cmtNo"));
-				bc.setCmtWriter(rset.getString("userId"));
-				bc.setBoardNo(rset.getInt("board_no"));
-				bc.setCmtLevel(rset.getInt("cmtLevel"));
-				bc.setCmtRefNo(rset.getInt("cmtRefNo"));
-				bc.setCmtContent(rset.getString("cmtContent"));
-				bc.setCmtRegDate(rset.getDate("cmtRegDate"));
-				bc.setRecommend(rset.getInt("Recommended"));
-				bc.setReported(rset.getInt("reported"));
-				bc.setCmtWriterGrade(rset.getString("userGrade"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
+		
+				try {
+					pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, cmtNo);
+					rset = pstmt.executeQuery();
+					
+					if(rset.next()) {
+						bc = new BoardComment();
+						bc.setCmtNo(rset.getInt("cmtNo"));
+						bc.setCmtWriter(rset.getString("userId"));
+						bc.setBoardNo(rset.getInt("board_no"));
+						bc.setCmtLevel(rset.getInt("cmtLevel"));
+						bc.setCmtRefNo(rset.getInt("cmtRefNo"));
+						bc.setCmtContent(rset.getString("cmtContent"));
+						bc.setCmtRegDate(rset.getDate("cmtRegDate"));
+						bc.setRecommend(rset.getInt("Recommended"));
+						bc.setReported(rset.getInt("reported"));
+						bc.setCmtWriterGrade(rset.getString("userGrade"));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					close(rset);
+					close(pstmt);
+				}
 		return bc;
 	}
+
 
 	public int selectBoardCount(Connection conn, String boardCode) {
 		PreparedStatement pstmt = null;

@@ -56,14 +56,14 @@
 			    
 	            });
 	            
-			    $('#w').addClass(value)
-		        $('#h').addClass(value);
+			    $('#con').addClass(value)
+		        $('#cod').addClass(value);
 		    	$(container).show();
                 
 			    $("#category").on('click',function(){
 					$(container).siblings().hide();
-				    $('#w').removeClass(value);
-					$('#h').removeClass(value).siblings().remove();
+				    $('#con').removeClass(value);
+					$('#cod').removeClass(value).siblings().remove();
 			    });
 		    });
             $('#summernote').summernote({
@@ -119,7 +119,7 @@
 			<input type="text" name="boardWriter" value="<%=bool?b.getBoardWriter():userLoggedIn.getUserId()%>" class="form-control" readonly/>
 		</div>
 		<!-- 작성자등급 -->
-		<input type="hidden" name="boardWriterGrade" value="gold"/>
+		<input type="hidden" name="boardWriterGrade" value="<%=b.getPoint()%>"/>
 		<!-- 게시글종류 선택 -->
 		<div class="form-group  has-feedback">
 			<select name="boardCode" class="form-control" id="boardSelect" required>
@@ -150,8 +150,8 @@
 		</div>
 	  	<!-- codemirror API -->
 	  	<div class="form-group  has-feedback">
-	  		<div class="code-container" id="w">
-	       	<textarea class="code" id="h" name="codeContent"><%=bool?(CDRbool?contentList.get(1):""):""%></textarea>
+	  		<div class="code-container" id="con">
+	       	<textarea class="code" id="cod" name="codeContent"><%=bool?(CDRbool?contentList.get(1):""):""%></textarea>
 	  		</div>
 		</div>
 		<!-- 버튼 -->
