@@ -227,9 +227,9 @@ public class BoardService {
 	}
 
 
-	public int selectDelBoardCount() {
+	public int selectDelBoardCount(int reportcount) {
 		Connection conn = getConnection();
-		int result = new BoardDAO().selectDelBoardCnt(conn);
+		int result = new BoardDAO().selectDelBoardCount(conn, reportcount);
 		close(conn);
 		return result;
 	}
@@ -266,6 +266,13 @@ public class BoardService {
 		List<DelBoard> list= new BoardDAO().selectRepBoardList(conn, cPage, numPerPage, reportcount);
 		close(conn);
 		return list;
+	}
+
+	public int selectRepBoardCount(int reportcount) {
+		Connection conn = getConnection();
+		int result = new BoardDAO().selectRepBoardCount(conn, reportcount);
+		close(conn);
+		return result;
 	}
 
 

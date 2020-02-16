@@ -557,7 +557,7 @@ public class BoardDAO {
 		return result;
 	}
 
-	public int selectDelBoardCnt(Connection conn) {
+	public int selectDelBoardCount(Connection conn, int reportcount) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int result = 0;
@@ -565,6 +565,7 @@ public class BoardDAO {
 
 		try {
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, reportcount);
 			rset = pstmt.executeQuery();
 			while (rset.next())
 				result = Integer.parseInt(rset.getString("COUNT(*)"));
@@ -684,6 +685,26 @@ public class BoardDAO {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public int selectRepBoardCount(Connection conn, int reportcount) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = prop.getProperty("selectRepBoardCount");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, reportcount);
+			rset = pstmt.executeQuery();
+			while (rset.next())
+				result = Integer.parseInt(rset.getString("COUNT(*)"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

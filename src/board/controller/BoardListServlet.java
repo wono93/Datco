@@ -59,13 +59,12 @@ public class BoardListServlet extends HttpServlet {
 		
 		if("REP".equals(boardCode)){
 			//신고게시판 -> 신고수 10개 이상인 것만 보여주기
-			totalBoardCount = new BoardService().selectDelBoardCount();
+			totalBoardCount = new BoardService().selectRepBoardCount(REPORTCOUNT);
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
 			dlist = boardService.selectRepBoardList(cPage, numPerPage, REPORTCOUNT);
-			
 		}else if("DEL".equals(boardCode)) {
 			//삭제게시판 -> 신고수 10개 미만인 것만 보여주기
-			totalBoardCount = new BoardService().selectDelBoardCount();
+			totalBoardCount = new BoardService().selectDelBoardCount(REPORTCOUNT);
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
 			dlist = boardService.selectDelBoardList(cPage, numPerPage, REPORTCOUNT);
 		}else {
@@ -74,7 +73,6 @@ public class BoardListServlet extends HttpServlet {
 			list = boardService.selectBoardList(cPage, numPerPage, boardCode);
 		}
 		
-		System.out.println("list@servlet="+list);
 
 		
 		if(pageNo == 1 ){
@@ -100,8 +98,8 @@ public class BoardListServlet extends HttpServlet {
 		} else {
 			pageBar += "<a href='"+request.getContextPath()+"/board/boardList?cPage="+pageNo+"'>[다음]</a>";
 		}
-
-		request.setAttribute("list", list);
+		if(list!=null) request.setAttribute("list", list);
+		else if(dlist!=null) request.setAttribute("list", dlist);
 		request.setAttribute("pageBar", pageBar);
 		request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp").forward(request, response);
 	}
