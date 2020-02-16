@@ -1,0 +1,223 @@
+/*header 시작  */
+html body{
+    margin:0;
+    padding:0;
+    font-size:12px;
+}
+nav{
+    display: block;
+   
+}
+.header_wrap{
+    width:100%;
+    min-width:1280px;
+    z-index: 98;
+    height:50px;
+    background:#232F3E;
+}
+.nav_header{
+    position: relative;
+    width:1280px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.header_logo{
+    position: relative;
+    float: left;
+    margin: 0;
+}
+#DatcoLogo{
+    float:left;
+    width: 300px;
+    height: 50px;
+}
+.nav_container{
+    position:relative;
+    display:flex;
+    width:1280px;
+    min-width: 1280px;
+    padding:0 15px;
+    margin: 15px auto 0;
+    min-height:925px;
+}
+.snb{
+    position: relative;
+    width: 145px;
+    min-width: 145px;
+    margin: 0 15px 0 0;
+}
+.side_nav {
+    width: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.side_nav .navmenu {
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: #fff;
+}
+a.searchuser,a.square,
+a.codereple,a.findjob{
+    color: #fff;
+    padding: 9px 10px;
+    margin: 0;
+    background-color: #232F3E;
+    border: 0;
+    height:30px;
+}
+.side_nav a{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+a{
+    text-decoration: none;
+    cursor:pointer;
+}
+ a:visited{
+ 	color:black;
+ }
+/*header 끝  */
+/*index 시작  */
+.content_main{
+    position: realative;
+    width: 895px;
+    min-width: 895px;
+}
+
+.section_contents {
+    display: flex;
+    width: 100%;
+}
+.section_list {
+    position: relative;
+    
+    min-width: 397px;
+    padding: 15px 23px 13px;
+    margin: 0 0 9px 0;
+    border-radius: 2px;
+     background-color: #fff; 
+    box-shadow: 0 0 1px 0 rgba(0,0,0,0.1);
+}
+.section_title {
+    display: block;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    margin: 0 0 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+.section_list .section_title a {
+   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: black;
+    padding: 5px 0;
+    margin: 0 0 10px;
+    opacity: .9;
+    background-color:white;
+}
+
+.section_list.searchlist {
+    min-height: 421px;
+}
+.section_list.squarelist{
+    min-height: 421px;
+}
+.section_contents .section_list:last-child {
+    margin: 0 0 9px 9px;
+}
+.section_contents .section_list:first-child {
+    margin: 0 0 9px 0;
+}
+.section_list.findjob{
+    min-height: 421px;
+}
+/*index 끝 */
+/*aside 시작 (이부분도 헤더)  */
+.aside {
+    width: 180px;
+    margin: 0 0 0 15px;
+    
+   
+    
+}
+.side_account {
+    width: 180px;
+    height: 140px;
+    padding: 10px;
+    margin: 0 0 1px 0;
+    border-radius: 2px 2px 0 0;
+    background-color: #fff;
+}
+.side_account .account_submit {
+    width:173px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3px 0;
+}
+
+.side_account .account_submit .checkbox {
+    color: #666;
+    letter-spacing: -0.8px;
+    
+}
+label span .checkbox{
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    top: -1px;
+    left: 0;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    background-color: #F1F1F1;
+   
+    
+}
+#loginbtn{
+    width: 60px;
+    height: 25px;
+    color: #fff;
+    font-weight: 500;
+    margin: 2px 0;
+    border-radius: 2px;
+    background-color: #516B82;
+    margin-left: 26px;
+}
+.side_account .account_signup {
+   
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: -0.8px;
+    width: 100%;
+    padding: 10px 0 0;
+    border-top: 1px dashed #E2E2E2;
+}
+.side_account .account_signup a {
+    color: #666;
+}
+/*인덱스끝  */
+.footer{
+	
+    z-index: 1;
+    clear: both;
+    width: 100%;
+    min-width: 1280px;
+    margin: 15px 0 0 0;
+    background-color: #eee;
+}
+}
+
+.footer address{
+  text-align: center;
+}
+
+.footer p{
+  text-align: center;
+}
+
+
