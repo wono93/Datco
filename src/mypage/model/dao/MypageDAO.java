@@ -265,4 +265,30 @@ public class MypageDAO {
 		
 		return point;
 	}
+
+	public int scrapAdd(Connection conn, Scrap s) {
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("scrapAdd");
+//		String query = "INSERT INTO TB_SCRAP VALUES(?, ?, ?,DEFAULT)";
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, s.getUserId());
+			pstmt.setInt(2, s.getBoardNo());
+			pstmt.setString(3, s.getMemo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);			
+		}
+		
+		
+		
+		return result;
+	}
 }

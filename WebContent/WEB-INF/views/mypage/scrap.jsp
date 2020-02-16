@@ -49,7 +49,7 @@ form#eachuser {
   }
   
   .memo-col{
-  	width: 200px;
+  	width: 100px;
   }
 </style>
 </head>
@@ -82,7 +82,7 @@ form#eachuser {
                 <td><%=s.getScrapRegDate()%></td>
 				<td class="memo-col"><%=s.getMemo()%></td>
 				<td><%=s.getBoardNo()%></td>
-				<td><%=s.getBoardTitle()%></td>
+				<td><span class="boardInquery"><input type="hidden" name="delNo" value="<%=s.getBoardNo()%>"><%=s.getBoardTitle()%></span></td>
                 <td><%=s.getBoardWriter() %></td>		
                 <td><span class="delScrap">삭제하기<input type="hidden" name="delNo" value="<%=s.getBoardNo()%>"></span></td>		
             </tr>		
@@ -94,35 +94,52 @@ form#eachuser {
 <script>
 
 $(function(){
-	makecursor();
-	
+	delcursor();
+	boardInquey();
 })
 
-function makecursor(){
+
+function boardInquey(){
+	$(".boardInquery").css("cursor","pointer").css("background-color", "rgba(0, 108, 183, 0.1)")
+	  .on("click",function(e){
+		  
+			let boardNo = $(this).children(['[name=openNo]']).val();
+		  let url = '<%=request.getContextPath() %>/board/boardView?boardNo='+boardNo;
+		  if(opener.closed) {   //부모창이 닫혔는지 여부 확인
+		      window.open(url, "openWin");
+		   } else {
+		      opener.location.href = url;
+		      opener.focus();
+		   }
+		  
+	  });
+		
+}
+function delcursor(){
 	$(".delScrap").css("cursor","pointer").css("background-color", "rgba(0, 108, 183, 0.36)")
 					  .on("click",function(e){
-						
-							let delScrap = {
-								userId:'<%=userLoggedIn.getUserId()%>',
-								boardNo:$(this).children(['[name=delNo]']).val()
-							};
-							console.log(delScrap);
-							$.ajax({
-								url:"<%=request.getContextPath()%>/mypage/scrapDel",
-								data: delScrap,
-								dataType: "json",
-								success : function(data) {
-									alert('스크랩이 해제되었습니다.')
-									location.reload();
-								},
-								error: function(x,s,e){
-									console.log(x,s,e);
-								}
-							});
-						   
-					  });
+			let delScrap = {
+				userId:'<%=userLoggedIn.getUserId()%>',
+				boardNo:$(this).children(['[name=delNo]']).val()
+			};
+			console.log(delScrap);
+			$.ajax({
+				url:"<%=request.getContextPath()%>/mypage/scrapDel",
+				data: delScrap,
+				dataType: "json",
+				success : function(data) {
+					alert('스크랩이 해제되었습니다.')
+					location.reload();
+				},
+				error: function(x,s,e){
+					console.log(x,s,e);
+				}
+			});
+ 	 });
 }
-</script>>>>
+
+
+</script>
 <input type="button" onclick="self.close();" value="닫기" />
 </body>
 </html>

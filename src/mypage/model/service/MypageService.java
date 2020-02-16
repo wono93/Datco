@@ -93,4 +93,15 @@ public class MypageService {
 		
 		return point;
 	}
+
+	public int scrapAdd(Scrap s) {
+		Connection conn = getConnection();
+		int result = new MypageDAO().scrapAdd(conn, s);
+		close(conn);
+		
+		if(result>0) commit(conn);
+		else rollback(conn);
+		
+		return result;
+	}
 }
