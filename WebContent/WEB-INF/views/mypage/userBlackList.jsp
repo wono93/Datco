@@ -108,6 +108,14 @@ $("#btn_add").click(function(){
 		data: blackList,
 		dataType: "json",
 		success : function(data) {
+			console.log(data);
+			if(userLoggedin.getUserId == userId){
+				alert('본인은 차단 할 수 없습니다');
+			}else if(data == 'exist'){
+				alert('이미 존재하는 차단유저 입니다.');
+			}else if(data == 'insertfail'){
+				alert('차단에 실패하였습니다 관리자에게 문의해주세요');
+			}
 			let blackList = "<thead><tr></tr> <tr><th>아이디</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
 			if (!(data.length == 0)) {
 				  $.each(data, function(idx, blackUser){
@@ -180,34 +188,9 @@ $("#btn_add").click(function(){
 
 		
 	$("#inquery").click(function(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/mypage/userBlackListLoading.do",
-			data: "userId=<%=userLoggedIn.getUserId()%>",
-				dataType : "json",
-				success : function(data) {
-					let blackList = "<thead><tr></tr> <tr><th>아이디</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
-						if (!(data.length == 0)) {
-						  $.each(data, function(idx, blackUser){
-							  let $delLoc = "location.href='<%=request.getContextPath()%>\/mypage\/BlackListDel?userId="+blackUser.userId+"&blackUser="+blackUser.blackId+"'";
-							  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
-                              "<td name='memo'>"+blackUser.memo+"</td>"+
-                              "<td>"+blackUser.regDate+"</td>"+
-                              "<td><input type='image' src='<%=request.getContextPath()%>/images/crossred.png' onclick=\""+$delLoc+"\" value='삭제'></td></tbody></tr>";
-        					  });
-						  blackList+="</tbody>";
-					} 
-						if(data.length == 0) {
-						blackList += "<tr><td colspan='4'>조회된 차단 유저가 없습니다</td></tr></tbody>";
-						console.log('아아아');
-					};
+			location.reload();
+	});
 
-					$("#blackListTable").html(blackList);
-					
-				
-				},
-				error : function(x, s, e) { console.log(x, s, e); }
-		});
-})
 		</script>
 		<br />
 		<table>

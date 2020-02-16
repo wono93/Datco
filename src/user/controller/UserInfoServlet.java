@@ -40,7 +40,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		
 		
 		String nickName = request.getParameter("nickName");
-
+		System.out.println(nickName);
 		User user = new UserService().selectOnebyNick(nickName);		
 		System.out.println("===========servlet@user=="+user);
 		String userId = user.getUserId();

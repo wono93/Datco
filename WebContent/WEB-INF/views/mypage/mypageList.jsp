@@ -211,5 +211,11 @@ function blackListInquery(){
 	console.log('dkdkdkdkd');
 }
 
+function userEdit(){
+	location.href = "<%=request.getContextPath()%>/mypage/userEdit?userId=<%=userLoggedIn.getUserId()%>";
+}
+
+
+
 </script>
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>

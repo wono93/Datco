@@ -15,9 +15,6 @@ import com.google.gson.Gson;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
-import common.GradeTemplate;
-import mypage.model.service.MypageService;
-import mypage.model.vo.Point;
 
 /**
  * Servlet implementation class MainBoardListServlet

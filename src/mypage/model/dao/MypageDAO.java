@@ -261,7 +261,7 @@ public class MypageDAO {
 			close(pstmt);
 		}
 		
-		System.out.println(blackList);
+		System.out.println("DAO===blackList==pointLog==="+blackList);
 		
 		return point;
 	}

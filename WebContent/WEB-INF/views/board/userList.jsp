@@ -153,7 +153,10 @@ $(function(){
 function content(){
 	$(".content_user").css("cursor","pointer")
 					  .on("click",function(e){
-						open("<%=request.getContextPath()%>/board/boardView?boardNo=1","waefw","width=500, height=300, top=300, left=200");
+						  let nickName = $(this).text();
+							console.log(nickName);
+							 let $infoLoc = '<%=request.getContextPath()%>\/user\/userInfo?nickName='+nickName;
+							open($infoLoc,"waefw","width=500, height=300, top=300, left=200");
 					  });
 }
 </script>
