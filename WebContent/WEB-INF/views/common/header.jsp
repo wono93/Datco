@@ -102,10 +102,10 @@
 					</li>
 					<%if(adminBool){ %>
 					<% %>
-					<li class="list-group-item <%=jobBool?"active":""%>">
+					<li class="list-group-item <%=repBool?"active":""%>">
 					    <a href="<%=request.getContextPath()%>/board/boardList?boardCode=REP">신고게시판</a>
 					</li>
-					<li class="list-group-item <%=jobBool?"active":""%>">
+					<li class="list-group-item <%=delBool?"active":""%>">
 					    <a href="<%=request.getContextPath()%>/board/boardList?boardCode=DEL">삭제게시판</a>
 					</li>
 					<%} %>

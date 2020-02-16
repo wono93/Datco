@@ -171,9 +171,9 @@ public class BoardService {
 	}
 
 
-	public List<DelBoard> selectDelBoardList(int cPage, int numPerPage, int i) {
+	public List<DelBoard> selectDelBoardList(int cPage, int numPerPage, int reportcount) {
 		Connection conn = getConnection();
-		List<DelBoard> list= new BoardDAO().selectDelBoardList(conn, cPage, numPerPage, i);
+		List<DelBoard> list= new BoardDAO().selectDelBoardList(conn, cPage, numPerPage, reportcount);
 		close(conn);
 		return list;
 	}
@@ -262,8 +262,10 @@ public class BoardService {
 	}
 
 	public List<DelBoard> selectRepBoardList(int cPage, int numPerPage, int reportcount) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = getConnection();
+		List<DelBoard> list= new BoardDAO().selectRepBoardList(conn, cPage, numPerPage, reportcount);
+		close(conn);
+		return list;
 	}
 
 

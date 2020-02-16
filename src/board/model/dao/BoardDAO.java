@@ -652,4 +652,38 @@ public class BoardDAO {
 		return myBoardTotal;
 	}
 
+	public List<DelBoard> selectRepBoardList(Connection conn, int cPage, int numPerPage, int reportcount) {
+		List<DelBoard> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectRepBoardList");
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, reportcount);
+			pstmt.setInt(2, (cPage - 1) * numPerPage + 1);
+			pstmt.setInt(3, cPage * numPerPage);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				DelBoard b = new DelBoard();
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardWriter(rset.getString("userId"));
+				b.setBoardOption(rset.getString("boardOption"));
+				b.setBoardTitle(rset.getString("boardTitle"));
+				b.setBoardWriterGrade("userGrade");
+				b.setReadCnt(rset.getInt("readCount"));
+				b.setCmtSelect(rset.getString("cmtselect"));
+				b.setBoardRegDate(rset.getDate("boardRegDate"));
+				b.setDelRepDate(rset.getDate("DEL_REP_date"));
+				list.add(b);
+			}
+			System.out.println(list.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
 }
