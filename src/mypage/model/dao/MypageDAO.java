@@ -137,7 +137,8 @@ public class MypageDAO {
 				bl.setMemo(rset.getString("memo"));
 				bl.setUserId(userId);
 				bl.setRegDate(rset.getDate("regDate"));
-				
+				bl.setBlackNickName(rset.getString("nickName"));
+				bl.setBlackUserGrade(Integer.toString(rset.getInt("point")));
 				blackList.add(bl);
 			}
 			

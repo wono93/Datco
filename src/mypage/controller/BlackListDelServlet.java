@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.org.apache.xml.internal.security.Init;
 
 import mypage.model.service.MypageService;
 import mypage.model.vo.BlackList;
@@ -34,7 +35,9 @@ public class BlackListDelServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String blackId = request.getParameter("blackUser");
 		String userId = request.getParameter("userId");
-
+		
+		
+		
 		BlackList bl = new BlackList();
 		bl.setBlackId(blackId);
 		bl.setUserId(userId);

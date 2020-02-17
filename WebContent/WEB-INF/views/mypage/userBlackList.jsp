@@ -101,7 +101,7 @@ $("#btn_add").click(function(){
 	};
 	let $userId = $("[name=delUserId]").val();
 	console.log($userId);
-	if(userLoggedin.getUserId == blackList.userId){
+	if('<%=userLoggedIn.getUserId()%>' == blackList.blackId){
 		alert('본인은 차단 할 수 없습니다');
 	 	return;
 	}
@@ -117,17 +117,17 @@ $("#btn_add").click(function(){
 			}else if(data == 'insertfail'){
 				alert('차단에 실패하였습니다 관리자에게 문의해주세요');
 			}
-			let blackList = "<thead><tr></tr> <tr><th>아이디</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
+			let blackList = "<thead><tr><th>아이디</th><th>닉네임</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
 			if (!(data.length == 0)) {
 				  $.each(data, function(idx, blackUser){
 					  let $delLoc = "location.href='<%=request.getContextPath()%>\/mypage\/BlackListDel?userId="+blackUser.userId+"&blackUser="+blackUser.blackId+"'";
 					  
 					  console.log($delLoc);
 					  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
-					 <%--  "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.userGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.nickName+" </td>--%>	
+					 "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.blackUserGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.blackNickName+" </td>"+	
 					  "<td name='memo'>"+blackUser.memo+"</td>"+
 					  "<td>"+blackUser.regDate+"</td>"+
-                    "<td><input type='image' src='<%=request.getContextPath()%>/images/crossred.png' onclick=\""+$delLoc+"\" value='삭제'></td></tbody></tr>";
+                    "<td><input type='image' src='<%=request.getContextPath()%>/images/bin.png' onclick=\""+$delLoc+"\" value='삭제'></td></tbody></tr>";
 					  });
 				  blackList+="</tbody>";
 			} 
@@ -150,8 +150,9 @@ $("#btn_add").click(function(){
 })
 
 </script>
-
+	
 		<table id="blackListTable"></table>
+		
 	
 		<script>
 	
@@ -161,16 +162,17 @@ $("#btn_add").click(function(){
 				data: "userId=<%=userLoggedIn.getUserId()%>",
 					dataType : "json",
 					success : function(data) {
-						let blackList = "<thead><tr></tr> <tr><th>아이디</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
+						let blackList = "<thead><tr><th>아이디</th><th>닉네임</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
 						if (!(data.length == 0)) {
 							  $.each(data, function(idx, blackUser){
 								  let $delLoc = "location.href='<%=request.getContextPath()%>\/mypage\/BlackListDel?userId="+blackUser.userId+"&blackUser="+blackUser.blackId+"'";
 								  
 								  console.log($delLoc);
 								  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
+								  "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.blackUserGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.blackNickName+" </td>"+	
                                   "<td name='memo'>"+blackUser.memo+"</td>"+
                                   "<td>"+blackUser.regDate+"</td>"+
-                                  "<td><input type='image' src='<%=request.getContextPath()%>/images/crossred.png' onclick=\""+$delLoc+"\" value='삭제'></td></tbody></tr>";
+                                  "<td><input type='image' src='<%=request.getContextPath()%>/images/bin.png' onclick=\""+$delLoc+"\" value='삭제' method='post'></td></tbody></tr>";
             					  });
 							  blackList+="</tbody>";
 						} 
