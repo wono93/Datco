@@ -169,6 +169,7 @@
 		}
 		/* 스크랩 */
 		function scrap(){
+				$("[name=memo]").val(prompt("메모를 입력하세요."));
 				$("[name=scrap]").submit();
 		}
 		function loginAlert(){
@@ -220,6 +221,7 @@
 				<div id="scrap">
 				<% if(userLoggedIn != null) {%>
 					<form action="<%=request.getContextPath()%>/mypage/scrapAdd" method="POST" name="scrap" >
+					<input type="hidden" name="memo" value="" />
 					<input type="hidden" name="userId" value="<%=userLoggedIn.getUserId()%>" />
 					<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" />
 					<button class="btn btn-primary" name="scrap" onclick="scrap();"><i class="fas fa-bookmark"></i>
