@@ -72,36 +72,44 @@ input#newPassword, input#passwordchk {
 </div>
 </form>
 <script>
+let pwdFlag=false;
+let chkPwdFlag=false;
+
 function password_validate(){
 	var pwd_old = $("#password").val().trim();
 	var pwd_new = $("#newPassword").val().trim();
 	var pwd_chk = $("#passwordchk").val().trim();
 	
 	if(pwd_new==""||pwd_chk=="") {
-		return false
+		return false;
 	}
 	if(pwd_old==pwd_new){
-		return false
-	}
-	
-	return true;	
-};
-
-$("#newPassword").keyup(function(){
-	var oldPassword = $("#password").val().trim();
-	var password= $("#newPassword").val().trim();
-	
-	if(oldPassword==password){
-		$("#pwdMsg").text("기존비밀번호와 같습니다.").css("color","red");
-	}
-	 
-	var regpass = /^(?=.*\d)(?=.*\w).{6,16}$/g;
-	if (!regpass.test(password)) {
-		$("#pwdMsg").text("6~16자 영문 대 소문자, 숫자를 사용하세요.");
-		$("#pwdMsg").css("color", "red");
 		return false;
 	}else{
+		return true;
+	}
+	
+	return false;	
+};
+$(function(){
+	
+
+$("#newPassword").keyup(function(e){
+	var usePassword= $("#password").val().trim();
+	var password= $("#newPassword").val().trim();
+	
+	if(usePassword==password){
+		$("#pwdMsg").text("기존비밀번호와 일치합니다.").css("color","red");
+		pwdFlag=false;
+	}
+	else{
+	var regpass = /^(?=.*\d)(?=.*\w).{6,16}$/g;
+	 if (!regpass.test(password)) {
+		$("#pwdMsg").text("6~16자 영문 대 소문자, 숫자를 사용하세요.");
+		$("#pwdMsg").css("color", "red");
+	} 
 		$("#pwdMsg").text("");
+		pwdFlag=true;
 	}
 	
 	
@@ -115,15 +123,12 @@ $("#passwordchk").keyup(function(){
 	if (password.val() != password2.val()) {
        $("#pwdchkMsg").text("일치하지않습니다.");
        $("#pwdchkMsg").css("color", "red");
-       return false
    } else {
    	$("#pwdchkMsg").text("일치합니다.");
        $("#pwdchkMsg").css("color", "green");
-       
-       
-       return true;
+      chkPwdFlag=true;
    }
-	return true;
+});
 });
 </script>
 

@@ -20,6 +20,7 @@ form {
 .title {
 	font-size: 14px;
 	font-weight: 700;
+	margin-top:20px;
 }
 
 #registerContainer {
@@ -37,6 +38,7 @@ form {
 	#nickName {
 	width: 100%;
 	height: 50px;
+	
 }
 
 #submit {
@@ -129,7 +131,13 @@ h1 {
 
 </form>
 <script>
-	
+		let idFlag=false;
+		let pwdFlag=false;
+		let pwd2Flag=false;
+		let nameFlag=false;
+		let nickFlag=false;
+		let emailFlag=false;
+		let phoneFlag=false;
 		
 		function registerValidate() {
 			if ($("#userId").val().trim() == "" || $("#password").val().trim() == ""
@@ -140,21 +148,22 @@ h1 {
 
 				return false;
 			}
-
+			if(idFlag==true && pwdFlag==true && nameFalg==true && nickFlag==true && emailFlag==true && phoneFlag==true){
+				
 			return true;
-
+			}
+				
+			return false;
 		}
 		
 		$("#userId").keyup(function() {
 			var userId = $("#userId").val();
 
-			var regId = /^[a-z0-9]{5,11}$/;
+			var regId = /^[a-z0-9]{6,12}$/;
 			
 			if (!regId.test(userId)) {
 				 $("#idMsg").text("6~12자의 영문 소문자, 숫자만 사용 가능합니다."); 
 				$("#idMsg").css("color", "red");
-
-				return false;
 			}else{
 				
 			  $.ajax({
@@ -169,17 +178,14 @@ h1 {
 		            		
 		            	$("#idMsg").text(data).css("color","red");
 		            	}else{
-		            		
 		            	$("#idMsg").text(data).css("color","green");
 		            	}
-	             
+	             			idFlag=true;
 		            },error(x,s,e){
 		            	console.log(x,s,e);
 		            }
 		        }); 
-			  return false;
 			}
-		return true;
 		});
 		$("#password").keyup(function(){
 			 var password = $("#password").val();
@@ -188,11 +194,10 @@ h1 {
 			if (!regpass.test(password)) {
 				$("#pwdMsg").text("6~16자 영문 대 소문자, 숫자를 사용하세요.");
 				$("#pwdMsg").css("color", "red");
-				return false;
 			}else{
 				$("#pwdMsg").text("");
+				pwdFlag=true;
 			}
-			
 			
 		});
 		
@@ -204,44 +209,40 @@ h1 {
 			if (password.val() != password2.val()) {
 	            $("#pwdchkMsg").text("일치하지않습니다.");
 	            $("#pwdchkMsg").css("color", "red");
-	            return false
 	        } else {
 	        	$("#pwdchkMsg").text("일치합니다.");
 	            $("#pwdchkMsg").css("color", "green");
 	            
-	            
-	            return true;
+			pwd2Flag=true
 	        }
-			return true;
 		});
 		
 		
 		$("#userName").keyup(function() {
 			var userName = $("#userName").val();
 		
-			var regName = /[가-힣]{2,4}/gi;
+			var regName = /^[가-힣]{2,4}$/gi;
 			if (!regName.test(userName)) {
 				$("#nameMsg").text("한글2글자이상 사용하세요.");
 				$("#nameMsg").css("color", "red");
-				return false;
 			}else{
 				$("#nameMsg").text("");
+				nameFlag=true;
 			}
-			
 	
 		});
 		$("#nickName").keyup(function() {
 			var nickName = $("#nickName").val();
 			
-			var regnick = /[가-힣]{2,6}/gi;;
+			var regnick = /^[가-힣]{2,6}$/gi;
 			if (!regnick.test(nickName)) {
 				$("#nickMsg").text("한글로 2글자이상 6글자까지 사용하세요.");
 				$("#nickMsg").css("color", "red");
 				
 			}else{
 				$("#nickMsg").text("");
+				nickFlag=true;
 			}
-	
 			
 
 		});
@@ -252,11 +253,10 @@ h1 {
 			if (!regemail.test(email)) {
 				$("#emailMsg").text("이메일을 확인해주세요.");
 				$("#emailMsg").css("color", "red");
-				return false;
 			}else{
 				$("#emailMsg").text("");
+				emailFlag=true;
 			}
-	
 			
 		});
 		$("#phone").keyup(function(){
@@ -266,11 +266,10 @@ h1 {
 			if (!regphone.test(phone)) {
 				$("#phoneMsg").text("번호를 확인해주세요.");
 				$("#phoneMsg").css("color", "red");
-				return false;
 			}else{
 				$("#phoneMsg").text("");
+				phoneFlag=true;
 			}
-	
 			
 		});
 		function sample6_execDaumPostcode() {

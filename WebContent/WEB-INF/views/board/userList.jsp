@@ -15,8 +15,15 @@ article{width:850px;}
 .BBTreeGR{font-family: BBTreeGR}
 .content_sort{text-align: center;}
 th{font-size: 15px;}
+#searchNick{
+	display : inline-block;
+	width: 50%;
+	margin : 0;
+	
+}
 </style>
 <article>
+	   <form class="form-inline">
 	<div class="btn-group btn-group-toggle" data-toggle="buttons">
 	  <label class="btn btn-secondary active">
 	    <input type="radio" name="options" id="point-sort" autocomplete="off" checked> 포인트
@@ -24,12 +31,11 @@ th{font-size: 15px;}
 	  <label class="btn btn-secondary">
 	    <input type="radio" name="options" id="selected-sort" autocomplete="off"> 채택수
 	  </label>
-	   <form class="form-inline">
 	   <div></div>
-	   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchNick" id="searchNick" style="float:rigth;" >
-	   <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btn-search">Search</button>
 	 	</form>
 	</div>	
+	   <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchNick" id="searchNick" style="float:rigth;" >
+	   <button class="btn btn-outline-success my-2 my-sm-0" type="button" id="btn-search">Search</button>
    <table class="table"> 
      <thead>
        <tr> 
@@ -112,6 +118,8 @@ $(function(){
 			}
 		});
 	});
+	
+	
 	$("#btn-search").on("click",function(){
 		var searchNick = $("#searchNick").val();
 		
@@ -143,6 +151,16 @@ $(function(){
 				console.log("ajax error");
 			}
 		});
+	});
+	$("#searchNick").keydown(function(e){
+		console.log(e.key);
+			if(e.keyCode==13){
+				
+				$("#btn-search").trigger("click");
+				
+				
+			}	
+				
 	});
 	
 	$("#point-sort").trigger("click");

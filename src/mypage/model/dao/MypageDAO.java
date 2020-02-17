@@ -311,4 +311,27 @@ public class MypageDAO {
 			}
 			return point;
 		}
+	
+	public int insertUser(Connection conn, Point p) {
+		PreparedStatement pstmt = null;
+		int pointResult = 0;
+//		String query = "INSERT INTO TB_POINT VALUES(?, ?, ?)";
+		String query = prop.getProperty("insertUser");
+//		System.out.println("p@DAO"+p);
+//		System.out.println("query@DAO"+query);
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, p.getUserId());
+			pstmt.setInt(2, p.getPoint());
+			pstmt.setInt(3, p.getSelectCnt());
+			pointResult = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return pointResult;
+	}
 }
+
+

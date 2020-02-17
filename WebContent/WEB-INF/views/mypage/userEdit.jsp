@@ -110,12 +110,15 @@ form {
 	</form>
 	
 	<script>
+	
+	let nickFlag=false;
+	let emailFlag=false;
+	let phoneFlag=false;
+	
 	function updateUser(){
 		
 		$("#userEditFrm").attr("action", "<%=request.getContextPath()%>/mypage/userEditEnd")
 						.submit();
-			
-		
 	}
 	function editValidate(){
 		if ( $("#nickName").val().trim() == ""|| $("#email").val().trim() == ""
@@ -123,7 +126,10 @@ form {
 			
 		return false;
 		}
-		return true;
+		if(nickFlag==true || emailFlag==true || phoneFlag==true){
+			return true;
+		}
+		return false;
 	}
 	function passupdateUser(){
 		location.href = "<%=request.getContextPath()%>/mypage/updatePass?userId=<%=userLoggedIn.getUserId()%>";
@@ -134,13 +140,15 @@ form {
 	$("#nickName").keyup(function() {
 		var nickName = $("#nickName").val();
 		
-		var regnick = /[가-힣]{2,6}/gi;;
+		var regnick = /^[가-힣]{2,6}$/gi;
 		if (!regnick.test(nickName)) {
 			$("#nickMsg").text("한글로 2글자이상 6글자까지 사용하세요.");
 			$("#nickMsg").css("color", "red");
 			
 		}else{
 			$("#nickMsg").text("");
+			nickFlag=true;
+
 		}
 
 		
@@ -151,11 +159,13 @@ form {
 
 		var regemail = 	/^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (!regemail.test(email)) {
-			$("#emailMsg").text("이메일을 확인해주세요.");
-			$("#emailMsg").css("color", "red");
+			$("#mailMsg").text("이메일을 확인해주세요.");
+			$("#mailMsg").css("color", "red");
 			
 		}else{
-			$("#emailMsg").text("");
+			$("#mailMsg").text("");
+			emailFlag=true;
+			
 		}
 
 		
@@ -170,6 +180,7 @@ form {
 			
 		}else{
 			$("#phoneMsg").text("");
+			phoneFlag=true;
 		}
 
 		
