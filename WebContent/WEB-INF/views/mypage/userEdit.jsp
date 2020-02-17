@@ -117,7 +117,7 @@ form {
 			
 		
 	}
-	function updateUser(){
+	function editValidate(){
 		if ( $("#nickName").val().trim() == ""|| $("#email").val().trim() == ""
 			|| $("#phone").val().trim() == "" || $("#address").val().trim() == "") {
 			
