@@ -70,6 +70,7 @@ public class MypageService {
 	public int deleteBlackUser(BlackList bl) {
 		Connection conn = getConnection();
 		int result = new MypageDAO().deleteBlackUser(conn, bl);
+
 		
 		if(result>0) commit(conn);
 		else rollback(conn);

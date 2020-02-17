@@ -14,7 +14,7 @@
 
 div#usermenu>div { display: inline-block; align-content: center; }
 
-div#usermenu:hover { background-color: rgba(51, 122, 183, 0.4); }
+div#usermenu:hover { background-color: rgba(51, 122, 183, 0.4); cursor: pointer; }
 
 div#menuinner { align-items: center; display: inline-block; }
 div#menuinner>div{min-height: 50px; min-width: 100%;}
@@ -57,6 +57,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					<div id='col-1st'>
 						<div>회원정보 조회 / 수정/ 회원탈퇴</div>
 					</div>
+					<hr />
 					<div>
 						<div>정보 조회 및 수정, 탈퇴</div>
 					</div>
@@ -70,6 +71,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					<div id='col-1st'>
 						<div>나의 글 보기</div>
 					</div>
+					<hr />
 					<div>
 						<div>작성한 모든 글 조회</div>
 					</div>
@@ -82,6 +84,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					<div id='col-1st'>
 						<div>나의 댓글 보기</div>
 					</div>
+					<hr />
 					<div>
 						<div>손님으로 방문하기</div>
 					</div>
@@ -95,6 +98,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					<div id='col-1st'>
 						<div >블랙 리스트 조회</div>
 					</div>
+					<hr />
 					<div>
 						<div>차단한 회원 조회하기</div>
 					</div>
@@ -107,6 +111,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					<div id='col-1st'>
 						<div>스크랩 조회</div>
 					</div>
+					<hr />
 					<div>
 						<div>스크랩 한 게시글 목록 보기</div>
 					</div>
@@ -119,6 +124,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					<div id='col-1st'>
 						<div>쪽지함 조회</div>
 					</div>
+					<hr />
 					<div>
 						<div>받은 메세지/보낸 메세지 조회</div>
 					</div>
@@ -126,13 +132,14 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 			</div>
 			</article>
 		</section>
-	</div>
-	</div>
+	</div>	</div>
 <script type="text/javascript">
 
 $(function(){
 
 });
+
+
 
 function blackListInquery(){
 	let url = "<%=request.getContextPath()%>/mypage/userBlackList?userId=<%=userLoggedIn.getUserId()%>";
