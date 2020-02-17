@@ -104,4 +104,11 @@ public class MypageService {
 		
 		return result;
 	}
+	
+	public int selectUserPoint(String userId) {
+		Connection conn = getConnection();
+		int point = new MypageDAO().selectUserPoint(conn, userId);
+		close(conn);
+		return point;
+	}
 }
