@@ -111,4 +111,5 @@ public class MypageService {
 		close(conn);
 		return point;
 	}
+	
 }
