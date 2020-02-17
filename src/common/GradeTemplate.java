@@ -13,7 +13,7 @@ public class GradeTemplate {
 		else if(point>1000) fileName = "Gold";
 		else if(point>500) fileName = "Iron";
 		else fileName = "Coal";
-		return fileName;
+		return fileName+".png";
 	}
 	
 }

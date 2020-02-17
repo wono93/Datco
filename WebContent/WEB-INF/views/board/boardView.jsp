@@ -204,7 +204,7 @@
 		<% if(userLoggedIn != null &&
 				b.getBoardWriter().equals(userLoggedIn.getUserId())){ %>
 			<a href="<%=request.getContextPath()%>/mypage/mypageList?userId=<%=userLoggedIn.getUserId()%>">
-				<img src="<%=request.getContextPath()%>/images/<%=b.getBoardWriterGrade() %>.png" alt="" width="50px"/>
+				<img src="<%=request.getContextPath()%>/images/<%=b.getBoardWriterGrade() %>" alt="" width="50px"/>
 				<h3><%=b.getBoardWriter()%></h3>
 			</a>
 		<% } else { %>
