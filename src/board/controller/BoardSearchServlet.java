@@ -36,6 +36,9 @@ public class BoardSearchServlet extends HttpServlet {
 		String searchText = request.getParameter("searchText");
 		String searchType = request.getParameter("searchType");
 		
+		System.out.println(boardCode);
+		System.out.println(boardCode);
+		System.out.println(boardCode);
 		final int numPerPage = 10;	//한페이지당 수
 		int cPage = 1;				//현재 페이지
 		final int pageBarSize = 5;	//페이지바 최대크기
@@ -58,7 +61,7 @@ public class BoardSearchServlet extends HttpServlet {
 		
 		String pageBar = new BoardPaging().pagingBar(request.getContextPath(), boardCode, cPage, pageNo, pageEnd, totalPage);
 		
-
+		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp").forward(request, response);
 	}

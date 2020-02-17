@@ -25,21 +25,36 @@
 		<div class="squareNav" role="navigation">
 			<h4><%=title.get(boardCode)%></h4>
 			
-			<div class="div-search">
-			
-			<form action="<%=request.getContextPath()%>/board/boardSearch">
-				<input type="hidden" name="boardCode" value="<%=boardCode%>"/>
-				<input type="hidden" name="searchType" value="boardTitle"/>
-				<input type="search" name="searchText" placeholder="검색어  입력" class="input-search" id="input_Src_Val"/>
-				<button id="search-btn" style="height: 38px;">검색</button>
-			</form>
+			<div id="searchArea">
+				<form action="<%=request.getContextPath()%>/board/boardSearch">
+					<div class="form-row align-items-center">
+					  <div class="col-auto">
+					    <div class="input-group mb-2">
+					      <div class="input-group-prepend">
+					        <div class="input-group-text">
+						      <select name="searchType" class="mr-sm-2" id="inlineFormCustomSelect">
+						        <option value="boardTitle" selected>제목</option>
+						        <option value="boardContent">내용</option>
+						        <option value="boardWriter">작성자</option>
+						      </select>
+					        </div>
+					      </div>
+					      <input name="searchText" type="text" class="form-control" id="inlineFormInputGroup" placeholder="검색어를 입력하세요">
+					    </div>
+					  </div>
+					  <div class="col-auto">
+						  <input type="hidden" name="boardCode" value="<%=boardCode%>">
+					      <button type="submit" class="btn btn-primary mb-2">검색</button>
+					  </div>
+					</div>
+				</form>
 			</div>
 			<br />
 			<div class="div-List">
 					<%
 				if (userLoggedIn != null) {
 			%>
-			<input type="button" value="글쓰기" id="btn-add"/>
+				<input type="button" value="글쓰기" id="btn-add"/>
 			<%
 				}
 			%>

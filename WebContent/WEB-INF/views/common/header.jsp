@@ -16,8 +16,8 @@
 	
 	String requestUri = request.getRequestURI();
 	
-	if(requestUri.contains("/board/boardList")){
-		String boardCode = request.getParameter("boardCode");
+	if(requestUri.contains("/board/boardList") || requestUri.contains("/board/boardSearch")){
+		String boardCode = (String)request.getParameter("boardCode");
 		if(boardCode.equals("FRE")) squBool=true;
 		else if(boardCode.equals("CDR")) cdrBool=true;
 		else if(boardCode.equals("JOB")) jobBool=true;
