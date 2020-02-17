@@ -35,12 +35,12 @@ form {
 	margin: 0 auto;
 }
 
-input {
+.content>input {
 	width: 100%;
 	height: 50px;
 }
 
-#submit{
+/* #submit{
 	width: 45%;
 	font-size: 20px;
 	background-color:rgb(0, 108, 183); 
@@ -53,10 +53,16 @@ input {
 	background-color:red; 
 	color: white;
 	margin-left:10px;
-}
+} */
 
 #btn {
 	margin: 30px 0 9px;
+}
+#btn input, #btn button{
+	width:45%;
+}
+#btn button{
+	float:right;
 }
 .leave_title{
 	text-align:center;
@@ -69,15 +75,16 @@ input {
 		name="leaveFrm" method="post">
 		<div id="registerContainer">
 			<div class="content">
-			<h1 class="leave_title">회원탈퇴</h1>
+			<h1 class="leave_title">회원탈퇴화면</h1>
 				<h3 class="title">
-					<label for="password">패스워드</label>
+					<label for="password">비밀번호</label>
 				</h3>
-				<input type="password" id="password" name="password" maxlength="16"> <span
-					id="pwdMsg"></span>
+				<input type="password" id="password" name="password" maxlength="16"
+				placeholder="비밀번호"> <span
+					id="pwdMsg" ></span>
 				<div id="btn">
-					<input type="button" id="submit" value="탈퇴하기" onclick="return deleteUser();">
-					<input type="button" id="cancel" value="취소" onclick="return deleteCancel();"/>
+					<input class="btn btn-primary" type="submit" value="탈퇴하기" onclick="return deleteUser();" >
+					<button type="button" class="btn btn-danger" onclick="return deleteCancel();">취소</button>
 				</div>
 			</div>
 		</div>
@@ -101,5 +108,4 @@ function deleteCancel(){
 	location.href="<%=request.getContextPath()%>/mypage/userEdit?userId=<%=userLoggedIn.getUserId()%>";
 }
 </script>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

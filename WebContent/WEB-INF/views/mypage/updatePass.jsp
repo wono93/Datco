@@ -25,41 +25,44 @@ input#newPassword, input#passwordchk, input#password {
 	height: 50px;
 }
 
-#btn input {
-	background-color: #516B82;
-	color: white;
-	cursor: pointer;
+#updatePass-container h1{
+	text-align:center;
 }
+.content label{
+	font-size:14px;
+	font-weight:600;
+}
+
 </style>
 
 <div id="updatePass-container">
+			<h1>비밀번호 변경하기</h1>
 	<form action="<%=request.getContextPath()%>/mypage/updatePassEnd"
 		name="helpUserPwFrm" method="post">
 		<div class="content">
-
 			<input type="hidden" id="userId" name="userId"
 				value="<%=userLoggedIn.getUserId()%>"> <input type="hidden"
 				id="oldpassword" name="oldpassword"
 				value="<%=userLoggedIn.getPassword()%>">
-			<h3 class="title">
+			<h4 class="title">
 				<label for="password">기존 비밀번호</label>
-			</h3>
-			<input type="password" id="password" name="password" maxlength="16">
+			</h4>
+			<input type="password" id="password" name="password" maxlength="16" placeholder="기존 비밀번호">
 			<span id="pwdMsg"></span>
-			<h3 class="title">
+			<h4 class="title">
 				<label for="password">변경할 비밀번호</label>
-			</h3>
+			</h4>
 			<input type="password" id="newPassword" name="newPassword"
-				maxlength="16"> <span id="newpwdMsg"></span>
-			<h3 class="title">
+				maxlength="16" placeholder="비밀번호"> <span id="newpwdMsg"></span>
+			<h4 class="title">
 				<label for="password2">패스워드확인</label>
-			</h3>
+			</h4>
 			<input type="password" id="passwordchk" name="passwordchk"
-				maxlength="16"> <span id="pwdchkMsg"></span>
+				maxlength="16" placeholder="비밀번호 확인"> <span id="pwdchkMsg"></span>
 			<div id="btn">
 				<center>
-					<input type="submit" id="submit" value="패스워드 변경하기"
-						onclick="return password_validate();">
+					<input class="btn btn-primary" type="submit" value="패스워드 변경하기"
+					onclick="return password_validate();">
 				</center>
 			</div>
 		</div>
@@ -92,7 +95,7 @@ input#newPassword, input#passwordchk, input#password {
 
 	});
 	$("#newPassword").keyup(function() {
-		var oldpassword = $("#password").val().trim();
+		var oldpassword = $("#oldpassword").val().trim();
 		var newpassword = $("#newPassword").val().trim();
 
 		 if (oldpassword == newpassword) {

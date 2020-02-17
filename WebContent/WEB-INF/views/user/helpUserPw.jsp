@@ -28,14 +28,12 @@ input#newPassword, input#passwordchk {
 	height: 50px;
 }
 
-#btn input {
-	background-color: #516B82;
-	color: white;
-	cursor: pointer;
-}
-
 .helpUserPwtitle {
 	text-align: center;
+}
+.title label {
+	font-size: 14px;
+	font-weight: 600;
 }
 </style>
 
@@ -50,22 +48,24 @@ input#newPassword, input#passwordchk {
 				<input type="hidden" id="userId" name="userId"
 					value="<%=user.getUserId()%>"> 
 					<input type="hidden"
-					id="password" name="password" value="<%=user.getPassword()%>">
+					id="password" name="password" value="<%=user.getPassword()%>"
+					>
 
 				<h3 class="title">
 					<label for="password">변경할 비밀번호</label>
 				</h3>
 				<input type="password" id="newPassword" name="newPassword"
-					maxlength="16"> <span id="pwdMsg"></span>
+					maxlength="16"
+					placeholder="변경할 비밀번호"> <span id="pwdMsg"></span>
 				<h3 class="title">
 					<label for="password2">패스워드확인</label>
 				</h3>
 				<input type="password" id="passwordchk" name="passwordchk"
-					maxlength="16"> <span id="pwdchkMsg"></span>
+					maxlength="16"
+					placeholder="변경할 비밀번호 확인"> <span id="pwdchkMsg"></span>
 				<div id="btn">
 					<center>
-						<input type="submit" id="submit" value="패스워드 변경하기"
-							onclick="return password_validate();">
+							<input class="btn btn-primary" type="submit" value="패스워드 변경하기" onclick="return password_validate();">
 					</center>
 				</div>
 			</div>

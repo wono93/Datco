@@ -78,33 +78,33 @@ h1 {
 			<h3 class="title">
 				<label for="id">아이디</label>
 			</h3>
-			<input type="text" id="userId" name="userId" maxlength="13">
+			<input type="text" id="userId" name="userId" maxlength="13" placeholder="아이디">
 			<span id="idMsg"></span>
 
 			<h3 class="title">
-				<label for="password">패스워드</label>
+				<label for="password">비밀번호</label>
 			</h3>
-			<input type="password" id="password" name="password" maxlength="16">
+			<input type="password" id="password" name="password" maxlength="16" placeholder="비밀번호">
 			<span id="pwdMsg"></span>
 			<h3 class="title">
-				<label for="password2">패스워드확인</label>
+				<label for="password2">비밀번호 확인</label>
 			</h3>
-			<input type="password" id="password2" name="password2" maxlength="16">
+			<input type="password" id="password2" name="password2" maxlength="16" placeholder="비밀번호 확인">
 			<span id="pwdchkMsg"></span>
 			<h3 class="title">
 				<label for="name">이름</label>
 			</h3>
-			<input type="text" id="userName" name="userName" maxlength="4">
+			<input type="text" id="userName" name="userName" maxlength="4" placeholder="이름">
 			<span id="nameMsg"></span>
 			<h3 class="title">
 				<label for="nickname">별명</label>
 			</h3>
-			<input type="text" id="nickName" name="nickName" maxlength="6">
+			<input type="text" id="nickName" name="nickName" maxlength="6" placeholder="별명">
 			<span id="nickMsg"></span>
 			<h3 class="title">
 				<label for="email">이메일</label>
 			</h3>
-			<input type="text" id="email" name="email"> <span
+			<input type="text" id="email" name="email" placeholder="이메일"> <span
 				id="emailMsg"></span>
 			<h3 class="title">
 				<label for="phone">핸드폰번호</label>
