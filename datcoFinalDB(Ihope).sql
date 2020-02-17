@@ -8,6 +8,20 @@
 --3. 접속생성
 
 --4. 테이블 생성입니다.
+
+SELECT A.TABLE_NAME AS "테이블명",
+       A.COLUMN_NAME AS "컬럼명",
+       A.DATA_TYPE AS "데이터타입",
+       A.DATA_LENGTH AS "길이",
+       A.NULLABLE AS "Null 여부",
+       B.COMMENTS AS "Comments"
+FROM   dba_tab_columns A,
+       all_col_comments B
+WHERE  A.OWNER = B.OWNER
+AND    A.TABLE_NAME = B.TABLE_NAME
+AND    A.COLUMN_NAME = B.COLUMN_NAME
+AND    A.OWNER = 'datco'
+ORDER BY A.TABLE_NAME;
 --=======================================================
 --datco계정 생성
 create user datco identified by datco
@@ -53,7 +67,7 @@ CREATE TABLE Tb_user
     userId VARCHAR2(20) NOT NULL, 
     name VARCHAR2(20) NOT NULL, 
     nickname VARCHAR2(40) NOT NULL, 
-    password VARCHAR2(40) NOT NULL, 
+    password VARCHAR2(400) NOT NULL, 
     email VARCHAR2(40) NOT NULL, 
     phone NUMBER NOT NULL, 
     enrollDate DATE default sysdate NOT NULL, 
@@ -127,7 +141,7 @@ CREATE TABLE Tb_removed_board
     userId VARCHAR2(20) NOT NULL, 
     boardCode CHAR(3) NOT NULL,  --게시판코드
     boardOption VARCHAR2(10) NOT NULL,  --게시글말머리
-    boardTitle VARCHAR2(100) NOT NULL, 
+    boardTitle VARCHAR2(200) NOT NULL, 
     boardContent CLOB NOT NULL, 
     originalFileName VARCHAR2(20) NULL, 
     renamedFileName VARCHAR2(20) NULL,
@@ -372,7 +386,7 @@ end;
 --(정상작동 확인 완료)
 create or replace trigger trg_point_update_by_select
 after
-insert on Tb_selected_cmt
+update on Tb_selected_cmt
 for each row
 declare
     slectedcnt number;
@@ -434,4 +448,51 @@ begin
 end;
 /
 
+-----------
+--==============================
+--테스트데이터
+--==============================
+insert into tb_user values('sadmin', 's관리자', 's그냥관리자', '1234', 'sadmin@datco.co', '0101111111', default, 'S', '닷코 우리집', default);
+insert into tb_user values('admin', '관리자', '그냥관리자', '1234', 'admin@datco.co', '010111111', default, 'A', '사이버 망령시', default);
+insert into tb_user values('ddochi', '또치', '또또치', '1234', 'eee@naver.com', '01011112222', default, 'U', '경기도 용인시', default);
+insert into tb_user values('dulli', '둘리', '둘둘리', '1234', 'dde@naver.com', '0101111223', default, 'U', '경기도 수원시', default);
+insert into tb_user values('gogildong', '고길동', '고고길동', '1234', 'eee1@naver.com', '01011112224', default, 'U', '경기도 광명시', default);
+insert into tb_user values('heedonge', '희동이', '희희동이', '1234', 'eee2@naver.com', '01011112225', default, 'U', '경기도 남양주시', default);
+insert into tb_user values('maichole', '마이콜', '마마이콜', '1234', 'eee3@naver.com', '01011112226', default, 'U', '경기도 파주시', default);
+insert into tb_user values('dounoe', '도우너', ' 도도우너', '1234', 'eee4@naver.com', '01011112227', default, 'U', '경기도 포천시', default);
+insert into tb_user values('gongsile', '공실이', '고공실이', '1234', 'eee5@naver.com', '01011112228', default, 'U', '경기도 가평군', default);
+insert into tb_user values('bayoking', '바요킹', '바바요킹', '1234', 'eee6@naver.com', '01011112229', default, 'U', '경기도 양평군', default);
+insert into tb_user values('gsigogi', '가시고기', '가가시고기', '1234', 'eee7@naver.com', '01011112230', default, 'U', '경기도 이천시', default);
+insert into tb_user values('hani', '하니', '하하니', '1234', 'eee8@naver.com', '01011112231', default, 'U', '경기도 여주시', default);
+insert into tb_user values('hongdukae', '홍두깨', '홍홍두깨', '1234', 'eee9@naver.com', '01011112232', default, 'U', '경기도 오산시', default);
+insert into tb_user values('goeunae', '고은애', '고고은애', '1234', 'eea1@naver.com', '01011112233', default, 'U', '경기도 안성시', default);
+insert into tb_user values('naaeri', '나애리', '나나애리', '1234', 'eea2@naver.com', '01011112234', default, 'U', '경기도 평택시', default);
+insert into tb_user values('ohyeongsim', '오영심', '영심이', '1234', 'eea3@naver.com', '01011112235', default, 'U', '경기도 하남시', default);
+insert into tb_user values('wanggyeongtae', '왕경태', '왕왕경태', '1234', 'eea4@naver.com', '01011112236', default, 'U', '경기도 구리시', default);
+insert into tb_user values('guwolsuk', '구월숙', '구구월숙', '1234', 'eea5@naver.com', '01011112237', default, 'U', '경기도 군포시', default);
+insert into tb_user values('ddachi', '따치', '따따치', '1234', 'eea6@naver.com', '01011112238', default, 'E', '경기도 광명시', default);
+insert into tb_user values('dduchi', '뚜치', '뚜뚜치', '1234', 'eea7@naver.com', '01011112239', default, 'E', '경기도 부천시', default);
+insert into tb_user values('ddeochi', '떠치', '떠떠치', '1234', 'eea8@naver.com', '01011112240', default, 'E', '경기도 시흥시', default);
+insert into tb_user values('userfordel', '삭제용', '사사삭제용', '1234', 'eea9@naver.com', '01011112241', default, 'E', '경기도 시흥시', default);
 
+insert into tb_point values('admin' ,51000, 5);
+insert into tb_point values('ddochi' ,6430, 145);
+insert into tb_point values('dulli' ,1300, 256);
+insert into tb_point values('gogildong' ,100, 234);
+insert into tb_point values('heedonge' ,2400, 235);
+insert into tb_point values('maichole' ,9670, 112);
+insert into tb_point values('dounoe' ,600, 30);
+insert into tb_point values('gongsile' ,370, 3);
+insert into tb_point values('bayoking' ,1140, 6);
+insert into tb_point values('gsigogi' ,6200, 8);
+insert into tb_point values('hani' ,81000, 24);
+insert into tb_point values('hongdukae' ,85000, 207);
+insert into tb_point values('goeunae' ,4000, 62);
+insert into tb_point values('naaeri' ,1420, 405);
+insert into tb_point values('ohyeongsim' ,1500, 10);
+insert into tb_point values('wanggyeongtae' ,1900, 0);
+insert into tb_point values('guwolsuk' ,5000, 0);
+insert into tb_point values('ddachi' ,9780, 0);
+insert into tb_point values('dduchi' ,9700, 2);
+insert into tb_point values('ddeochi' ,5700, 1);
+insert into tb_point values('userfordel' ,4000, 7);

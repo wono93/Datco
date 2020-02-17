@@ -193,8 +193,7 @@ public class MypageDAO {
 			pstmt.setString(2, bl.getBlackId());
 			
 			result = pstmt.executeUpdate();
-			
-			
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

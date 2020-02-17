@@ -23,7 +23,6 @@
 		}
 	}
 
-	/* List<BlackList> blackList =  */
 %>
 <!DOCTYPE html>
 <html>
@@ -89,7 +88,10 @@ form#eachuser {
 				</tr>
 			</table>
 		</form>
-		<script>
+		<br />
+		<br />
+		
+<script>
 		
 		
 $("#btn_add").click(function(){
@@ -104,7 +106,7 @@ $("#btn_add").click(function(){
 	if('<%=userLoggedIn.getUserId()%>' == blackList.blackId){
 		alert('본인은 차단 할 수 없습니다');
 	 	return;
-	}
+	} 
 	console.log(blackList);
 	$.ajax({
 		url:"<%=request.getContextPath()%>/mypage/userBlackListAdd.do",
@@ -114,97 +116,109 @@ $("#btn_add").click(function(){
 			console.log(data);
 			if(data == 'exist'){
 				alert('이미 존재하는 차단유저 입니다.');
+				
 			}else if(data == 'insertfail'){
-				alert('차단에 실패하였습니다 관리자에게 문의해주세요');
+				alert('차단에 실패하였습니다 관리자에게 문의해주세요');	
+			}else{
+				alert('차단등록 되었습니다. 리스트를 확인해주세요.');	
+				location.reload();
 			}
-			let blackList = "<thead><tr><th>아이디</th><th>닉네임</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
-			if (!(data.length == 0)) {
-				  $.each(data, function(idx, blackUser){
-					  let $delLoc = "location.href='<%=request.getContextPath()%>\/mypage\/BlackListDel?userId="+blackUser.userId+"&blackUser="+blackUser.blackId+"'";
-					  
-					  console.log($delLoc);
-					  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
-					 "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.blackUserGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.blackNickName+" </td>"+	
-					  "<td name='memo'>"+blackUser.memo+"</td>"+
-					  "<td>"+blackUser.regDate+"</td>"+
-                    "<td><input type='image' src='<%=request.getContextPath()%>/images/bin.png' onclick=\""+$delLoc+"\" value='삭제'></td></tbody></tr>";
-					  });
-				  blackList+="</tbody>";
-			} 
-				if(data.length == 0) {
-				blackList += "<tr><td colspan='4'>조회된 차단 유저가 없습니다</td></tr></tbody>";
-				console.log('아아아');
-			};
-			$("#blackListTable").html(blackList);
-		
-		},
+			
+			
+		}, 
 		error: function(x,s,e){
 			console.log(x,s,e);
-		},
+		}, //e
 		complete: function(){
 			//등록폼 초기화
 			$("#BlackListAddForm")[0].reset();
-		}
-	});
+			
+		} //c
+	}); //ajax
 	
 })
 
 </script>
 	
 		<table id="blackListTable"></table>
+<script>
+	function btnfordel(){
+		$(".btnfordel").css("cursor","pointer").on("click",function(e){
+			  console.log(this);
+			  let delBlack = {
+						userId:$(this).children().eq(1).val(),
+						blackId:$(this).children().eq(2).val()
+			  };
+					console.log('console');
+					console.log(delBlack);
 		
-	
-		<script>
-	
-		$().ready(function(){
 			$.ajax({
-				url: "<%=request.getContextPath()%>/mypage/userBlackListLoading.do",
-				data: "userId=<%=userLoggedIn.getUserId()%>",
-					dataType : "json",
+				url: "<%=request.getContextPath()%>/mypage/BlackListDel",
+				data: delBlack,
+				dataType : "json",
 					success : function(data) {
-						let blackList = "<thead><tr><th>아이디</th><th>닉네임</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
-						if (!(data.length == 0)) {
-							  $.each(data, function(idx, blackUser){
-								  let $delLoc = "location.href='<%=request.getContextPath()%>\/mypage\/BlackListDel?userId="+blackUser.userId+"&blackUser="+blackUser.blackId+"'";
-								  
-								  console.log($delLoc);
-								  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
-								  "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.blackUserGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.blackNickName+" </td>"+	
-                                  "<td name='memo'>"+blackUser.memo+"</td>"+
-                                  "<td>"+blackUser.regDate+"</td>"+
-                                  "<td><input type='image' src='<%=request.getContextPath()%>/images/bin.png' onclick=\""+$delLoc+"\" value='삭제' method='post'></td></tbody></tr>";
-            					  });
-							  blackList+="</tbody>";
-						} 
-							if(data.length == 0) {
-							blackList += "<tr><td colspan='4'>조회된 차단 유저가 없습니다</td></tr></tbody>";
-							console.log('아아아');
-						};
-
-						$("#blackListTable").html(blackList);
-						
-					
+						if(data == 'completed'){
+							alert('선택하신 차단 유저가 삭제되었습니다.');
+							location.reload();
+						}else if(data == 'failed'){
+							alert('삭제에 실패하였습니다 관리자에게 문의해주세요');
+							location.reload();
+						}
 					},
 					error : function(x, s, e) { console.log(x, s, e); }
 			});
-		})
+		});
+		
+			
+	}
 	
+	$().ready(function(){
+		$.ajax({
+			url: "<%=request.getContextPath()%>/mypage/userBlackListLoading.do",
+			data: "userId=<%=userLoggedIn.getUserId()%>",
+				dataType : "json",
+				success : function(data) {
+					let blackList = "<thead><tr><th>아이디</th><th>닉네임</th><th class='memo-col'>메모</th><th>차단일</th><th>삭제</th></tr></thead><tbody>";
+					if (!(data.length == 0)) {
+						 $.each(data, function(idx, blackUser){
+							 
+							  blackList+= "<tr><td name='blackId'>"+blackUser.blackId+"</td>"+
+							 "<td><img src='<%=request.getContextPath()%>/images/"+blackUser.blackUserGrade+"' alt='' style='width:20px;' class='message_box'>"+blackUser.blackNickName+" </td>"+	
+							  "<td name='memo'>"+blackUser.memo+"</td>"+
+							  "<td>"+blackUser.regDate+"</td>"+
+		                    "<td><span class='btnfordel'><img src='<%=request.getContextPath()%>/images/bin.png'/> <input type='hidden' name='userId' value="+blackUser.userId+" /> <input type='hidden' name='blackUser' value="+blackUser.blackId+" /> </span></td></tr>";
+							  });
+						  blackList+="</tbody>";
+					} 
+						if(data.length == 0) {
+						blackList += "<tr><td colspan='5'>조회된 차단 유저가 없습니다</td></tr></tbody>";
+						console.log('아아아');
+					}
+
+					$("#blackListTable").html(blackList);
+					btnfordel();
+				
+				},
+				error : function(x, s, e) { console.log(x, s, e); }
+		});
+	})
+
 
 		
 	$("#inquery").click(function(){
 			location.reload();
 	});
 
-		</script>
-		<br />
-		<table>
-		<tr>
-			<td>
-		<button id="inquery">조회하기</button>
-		<input type="button" onclick="self.close();" value="닫기" />
-			</td>
-		</tr>		
-		</table>
+</script>
+<br />
+<table>
+<tr>
+	<td>
+<button id="inquery" onclick="location.reload();">조회하기</button>
+<input type="button" onclick="self.close();" value="닫기" />
+	</td>
+</tr>		
+</table>
 	</section>
 </body>
 </html>
