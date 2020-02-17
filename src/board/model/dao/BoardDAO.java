@@ -772,17 +772,24 @@ public class BoardDAO {
 		return dBoard;
 	}
 
-	public List<Board> selectBoardSearch(Connection conn, String searchText) {
+	public List<Board> selectBoardSearch(Connection conn, String boardCode, String searchType, String searchText, int cPage, int numPerPage) {
 		List<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectBoardSearch");
+		query = query.replaceAll("\u2605", searchType);
+		System.out.println(query);
 		try {
 			pstmt = conn.prepareStatement(query);
-			// 시작 rownum과 마지막 rownum 구하는 공식
-			pstmt.setString(1, "%"+searchText+"%");
-//			pstmt.setInt(2, (cPage - 1) * numPerPage + 1);
-//			pstmt.setInt(3, cPage * numPerPage);
+			// TB_Board Table
+			// 0. ColumnName Replace
+			// 1. baordCode = ?
+			// 2. ColumnName = ?
+			// 3-4. Between ? and ?
+			pstmt.setString(1, boardCode);
+			pstmt.setString(2, "%"+searchText+"%");
+			pstmt.setInt(3, (cPage - 1) * numPerPage + 1);
+			pstmt.setInt(4, cPage * numPerPage);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
 				Board b = new Board();

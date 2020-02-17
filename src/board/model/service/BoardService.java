@@ -282,9 +282,9 @@ public class BoardService {
 		return dBoard;
 	}
 
-	public List<Board> selectBoardSearch(String searchText) {
+	public List<Board> selectBoardSearch(String boardCode, String searchType, String searchText, int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<Board> myCurBoardt= new BoardDAO().selectBoardSearch(conn, searchText);
+		List<Board> myCurBoardt= new BoardDAO().selectBoardSearch(conn, boardCode, searchType, searchText, cPage, numPerPage);
 		close(conn);
 		return myCurBoardt;
 	}

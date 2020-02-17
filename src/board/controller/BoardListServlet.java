@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Board;
 import board.model.vo.DelBoard;
+import common.BoardPaging;
 
 /**
  * Servlet implementation class BoardListServlet
@@ -46,17 +47,17 @@ public class BoardListServlet extends HttpServlet {
 		try{
 			cPage = Integer.parseInt(request.getParameter("cPage"));
 		} catch(NumberFormatException e){
-			cPage = 1;
+			
 		}
 		
 		List<Board> list = null;
 		List<DelBoard> dlist = null;
 		
-		String pageBar = "<ul class='pagination' id='pagingNumber'>";	
 		final int pageBarSize = 5;
 		int pageStart = ((cPage - 1)/pageBarSize) * pageBarSize +1;
 		int pageEnd = pageStart+pageBarSize-1;
 		int pageNo = pageStart;
+		String pageBar = new BoardPaging().pagingBar(request.getContextPath(), boardCode, cPage, pageNo, pageEnd, totalPage);
 		if("REP".equals(boardCode)){
 			//신고게시판 -> 신고수 10개 이상인 것만 보여주기
 			totalBoardCount = new BoardService().selectRepBoardCount(REPORTCOUNT);
@@ -73,42 +74,6 @@ public class BoardListServlet extends HttpServlet {
 			list = boardService.selectBoardList(cPage, numPerPage, boardCode);
 		}
 
-		if(pageNo == 1 ){
-			pageBar += 	"";
-		}
-		else {
-			pageBar += "<li class='page-item'>"
-					+  "	<a class='page-link' href='"+request.getContextPath()+"/board/boardList?boardCode="+boardCode+"&cPage="+(pageNo-1)+"'>이전</a> "
-					+  "</li>";
-		}
-			
-		while(!(pageNo>pageEnd || pageNo > totalPage)){
-			
-			if(cPage == pageNo ){
-				pageBar += 	" <li class='page-item active' aria-current='page'>" 
-						+	"	<span class='page-link'>" + cPage 
-						+   "	<span class='sr-only'>(current)</span>" 
-						+	"   </span>"  
-						+ 	"</li>";
-			} 
-			else {
-				pageBar += 	"<li class='page-item'>"
-						+ 	"	<a class='page-link' href='" + request.getContextPath()+"/board/boardList?boardCode="+boardCode+"&cPage="+pageNo+"'>"
-						+ 	pageNo+ "</a>"
-						+ 	"</li>";
-			}
-			pageNo++;
-		}
-		
-		if(pageNo > totalPage){
-			pageBar += "";
-		} else {
-			pageBar += 	"<li class='page-item'>" 
-					+	"      <a class='page-link' href='"+request.getContextPath()+"/board/boardList?boardCode="+boardCode+"&cPage="+pageNo+"'>"
-					+ 	"다음</a>" 
-					+	"</li>";
-		}
-		pageBar += "</ul>";
 		if(list!=null) {
 			System.out.println("11");
 			request.setAttribute("list", list);

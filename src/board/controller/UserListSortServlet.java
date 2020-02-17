@@ -39,11 +39,6 @@ public class UserListSortServlet extends HttpServlet {
 		//리스트로 출력할 최소값
 		int cPage = 1;
 		
-		try{
-			cPage = Integer.parseInt(request.getParameter("cPage"));
-		} catch(NumberFormatException e){
-			
-		}
 //		1	아이디 userid
 //		2	닉네임 nickname
 //		3	포인트 point

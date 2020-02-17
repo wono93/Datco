@@ -36,11 +36,6 @@ public class UserListServlet extends HttpServlet {
 		final int numPerPage = 100;//한페이지당 수
 		int cPage = 1;//요청페이지
 		
-		try{
-			cPage = Integer.parseInt(request.getParameter("cPage"));
-		} catch(NumberFormatException e){
-			
-		}
 //		1	아이디 userid
 //		2	닉네임 nickname
 //		3	포인트 point

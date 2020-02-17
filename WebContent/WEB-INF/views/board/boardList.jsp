@@ -26,8 +26,10 @@
 			<h4><%=title.get(boardCode)%></h4>
 			
 			<div class="div-search">
+			
 			<form action="<%=request.getContextPath()%>/board/boardSearch">
 				<input type="hidden" name="boardCode" value="<%=boardCode%>"/>
+				<input type="hidden" name="searchType" value="boardTitle"/>
 				<input type="search" name="searchText" placeholder="검색어  입력" class="input-search" id="input_Src_Val"/>
 				<button id="search-btn" style="height: 38px;">검색</button>
 			</form>
