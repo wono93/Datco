@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import common.GradeTemplate;
 import mypage.model.service.MypageService;
 import mypage.model.vo.BlackList;
+import mypage.model.vo.Point;
 
 /**
  * Servlet implementation class BlackListConnectServlet
@@ -38,6 +40,12 @@ public class BlackListLoadingServlet extends HttpServlet {
 		
 		String userId = request.getParameter("userId");
 		List<BlackList> blackList = new MypageService().selectBlackList(userId);
+
+		for(BlackList b : blackList) {
+			b.setBlackUserGrade(new GradeTemplate().userGrade(Integer.parseInt(b.getBlackUserGrade())));
+		}
+		
+		
 		String gsonblist = new Gson().toJson(blackList);
 
 		

@@ -13,13 +13,24 @@ public class BlackList implements Serializable{
 	private Date regDate;
 	private String memo;
 	private String blackNickName;
-
+	private String blackUserGrade;
 
 
 	public BlackList() {
 		super();
 	}
-	
+
+	public BlackList(String userId, String blackId, Date regDate, String memo, String blackNickName,
+			String blackUserGrade) {
+		super();
+		this.userId = userId;
+		this.blackId = blackId;
+		this.regDate = regDate;
+		this.memo = memo;
+		this.blackNickName = blackNickName;
+		this.blackUserGrade = blackUserGrade;
+	}
+
 	public BlackList(String userId, String blackId, Date regDate, String memo) {
 		super();
 		this.userId = userId;
@@ -38,10 +49,11 @@ public class BlackList implements Serializable{
 	}
 	
 	
+
 	@Override
 	public String toString() {
 		return "BlackList [userId=" + userId + ", blackId=" + blackId + ", regDate=" + regDate + ", memo=" + memo
-				+ ", blackNickName=" + blackNickName + "]";
+				+ ", blackNickName=" + blackNickName + ", blackUserGrade=" + blackUserGrade + "]";
 	}
 
 	public String getUserId() {
@@ -76,4 +88,14 @@ public class BlackList implements Serializable{
 	public void setBlackNickName(String blackNickName) {
 		this.blackNickName = blackNickName;
 	}
+
+	public String getBlackUserGrade() {
+		return blackUserGrade;
+	}
+
+	public void setBlackUserGrade(String blackUserGrade) {
+		this.blackUserGrade = blackUserGrade;
+	}
+	
+	
 }

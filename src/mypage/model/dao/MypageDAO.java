@@ -137,7 +137,8 @@ public class MypageDAO {
 				bl.setMemo(rset.getString("memo"));
 				bl.setUserId(userId);
 				bl.setRegDate(rset.getDate("regDate"));
-				
+				bl.setBlackNickName(rset.getString("nickName"));
+				bl.setBlackUserGrade(Integer.toString(rset.getInt("point")));
 				blackList.add(bl);
 			}
 			
@@ -291,4 +292,24 @@ public class MypageDAO {
 		
 		return result;
 	}
+	
+	public int selectUserPoint(Connection conn, String userId) {
+			PreparedStatement pstmt = null;
+			ResultSet rset =  null;
+			String query = prop.getProperty("selectUserPoint");
+			int point = 0;
+			try {
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, userId);
+				rset = pstmt.executeQuery();
+				while(rset.next())
+					point = rset.getInt("POINT");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return point;
+		}
 }
