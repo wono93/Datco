@@ -16,7 +16,7 @@ import common.wrapper.EncryptWrapper;
 /**
  * Servlet Filter implementation class EncryptFilter
  */
-@WebFilter({ "/member/memberEnrollEnd", "/member/login", "/member/updatePasswordEnd" })
+@WebFilter({ "/user/login", "/user/helpUserPwCha"})
 public class EncryptFilter implements Filter {
 
     /**
