@@ -772,4 +772,37 @@ public class BoardDAO {
 		return dBoard;
 	}
 
+	public List<Board> selectBoardSearch(Connection conn, String searchText) {
+		List<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBoardSearch");
+		try {
+			pstmt = conn.prepareStatement(query);
+			// 시작 rownum과 마지막 rownum 구하는 공식
+			pstmt.setString(1, "%"+searchText+"%");
+//			pstmt.setInt(2, (cPage - 1) * numPerPage + 1);
+//			pstmt.setInt(3, cPage * numPerPage);
+			rset = pstmt.executeQuery();
+			while (rset.next()) {
+				Board b = new Board();
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardWriter(rset.getString("userId"));
+				b.setBoardOption(rset.getString("boardOption"));
+				b.setBoardTitle(rset.getString("boardTitle"));
+				b.setBoardWriterGrade("userGrade");
+				b.setReadCnt(rset.getInt("readCount"));
+				b.setCmtSelect(rset.getString("cmtselect"));
+				b.setBoardRegDate(rset.getDate("boardRegDate"));
+				list.add(b);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
 }

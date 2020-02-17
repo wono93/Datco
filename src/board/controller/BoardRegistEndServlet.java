@@ -49,9 +49,10 @@ public class BoardRegistEndServlet extends HttpServlet {
 		String boardTitle = request.getParameter("boardTitle");
 		String boardContent = request.getParameter("boardContent");
 		
-//		boardContent = boardContent.replaceAll("<", "&lt;")
-//								   .replaceAll(">", "&gt;")
-//								   .replaceAll("\\n", "<br>");
+		boardContent = boardContent.replaceAll("<script>", "&lt;script&gt;")
+								   .replaceAll("</script>", "&lt;/script&gt;")
+								   .replaceAll("\\n", "<br>");
+		
 
 		//코드리플게시판 boardContent = boardContent + codeContent JSON으로 담기
 		if("CDR".equals(boardCode)) {

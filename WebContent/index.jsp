@@ -7,7 +7,7 @@
 		<div class="section_contents">
 			<div class="section_list searchlist">
 				<h2 class="section_title">
-					<a href="" class="square">자유게시판</a>
+					<a href="<%=request.getContextPath()%>/board/boardList?boardCode=FRE" class="square">자유게시판</a>
 				</h2>
 					<table id="board_FRE">
 					
@@ -15,7 +15,7 @@
 			</div>
 			<div class="section_list squarelist ">
 				<h2 class="section_title">
-					<a href="" class="codereple">코드리플</a>
+					<a href="<%=request.getContextPath()%>/board/boardList?boardCode=CDR" class="codereple">코드리플</a>
 				</h2>
 				<table id="board_CDR">
 				</table>
@@ -24,7 +24,7 @@
 		<div class="section_contents">
 			<div class="section_list findjob">
 				<h2 class="section_title">
-					<a href="" class="findjob">구인구직</a>
+					<a href="<%=request.getContextPath()%>/board/boardList?boardCode=JOB" class="findjob">구인구직</a>
 				</h2>
 				<table id="board_JOB">
 				</table>

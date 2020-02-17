@@ -282,5 +282,12 @@ public class BoardService {
 		return dBoard;
 	}
 
+	public List<Board> selectBoardSearch(String searchText) {
+		Connection conn = getConnection();
+		List<Board> myCurBoardt= new BoardDAO().selectBoardSearch(conn, searchText);
+		close(conn);
+		return myCurBoardt;
+	}
+
 
 }
