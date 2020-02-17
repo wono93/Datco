@@ -34,25 +34,26 @@ public class BoardReportServlet extends HttpServlet {
 		//boardCode 도 던져주세요(BoardListServlet 호출용)
 		String boardCode = request.getParameter("boardCode");
 		String userId = request.getParameter("userId");
-		String referer = request.getParameter("Referer");
+		String referer = "/board/boardView?boardNo=";
+		//System.out.println("referer:be"+referer);
 		
 		//borad | comment 인지 확인하기
 		if(request.getParameter("boardNo") != null) {
-			System.out.println("request.getParameter(\"boardNo\")="+request.getParameter("boardNo"));
+			//System.out.println("boardNo@ReportServlet="+boardNo);
 			
 			//게시글 신고
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-			//System.out.println("boardNo@ReportServlet="+boardNo);
 			
 			//신고로그 테이블에 있는지 확인(중복검열)
 			int result = new BoardService().selctReportBoard(boardNo, userId);
-			System.out.println("result@ReportServlet="+result);
+//			System.out.println("result@ReportServlet="+result);
 			
 			if(result == 0) {
 				//없을시 신고처리(insert)해주기
 				result = new BoardService().insertReportBoard(boardNo, userId);
 			}else {
-				errorMsg(request, response, referer, "해당 글은 이미 신고하셨습니다.");
+				System.out.println("referer:af"+referer);
+				errorMsg(request, response, referer+boardNo, "해당 글은 이미 신고하셨습니다.");
 				return;
 			}
 			
@@ -75,6 +76,7 @@ public class BoardReportServlet extends HttpServlet {
 					return;
 				}
 			}
+			errorMsg(request, response, "/board/boardLise?boardCode="+boardCode, "신고가 정상적으로 처리되었습니다.");
 		} else if(request.getParameter("cmtNo") != null) {
 			//boardView?boardNo 호출용
 			int boardNo2 = Integer.parseInt(request.getParameter("boardNo2"));
@@ -89,7 +91,7 @@ public class BoardReportServlet extends HttpServlet {
 				//신고처리 해주기
 				result = new BoardService().insertReportCmt(cmtNo, userId);
 			} else {
-				errorMsg(request, response, referer, "해당 글은 이미 신고하셨습니다.");
+				errorMsg(request, response, referer+boardNo2, "해당 글은 이미 신고하셨습니다.");
 				return;
 			}
 			
@@ -102,7 +104,7 @@ public class BoardReportServlet extends HttpServlet {
 				
 				//댓글 테이블에서 삭제
 				int moveResult = new BoardService().boardCmtDel(cmtNo);
-				System.out.println("moveResult@Servlet="+moveResult);
+				System.out.println("moveSResult@Servlet="+moveResult);
 				
 				if(moveResult > 0) {
 					//댓글삭제 후 게시판 돌아가기
@@ -112,10 +114,10 @@ public class BoardReportServlet extends HttpServlet {
 					return;
 				}
 			}
+			errorMsg(request, response, referer+boardNo2, "신고가 정상적으로 처리되었습니다.");
 			
 		}
-		errorMsg(request, response, referer, "신고가 정상적으로 처리되었습니다.");
-		
+
 	}
 	private void errorMsg(HttpServletRequest request, HttpServletResponse response, String loc, String msg) throws ServletException, IOException {
 		request.setAttribute("loc", loc);

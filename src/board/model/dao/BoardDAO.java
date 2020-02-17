@@ -99,6 +99,7 @@ public class BoardDAO {
 			pstmt.setInt(1, boardNo);
 			rset = pstmt.executeQuery();
 			while (rset.next()) {
+				selc = new SelectedComment();
 				selc.setBoardNo(rset.getInt("board_no"));
 				selc.setCmtNo(rset.getInt("cmtno"));
 				selc.setSelectedDate(rset.getDate("selecteddate"));
