@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
+import common.GradeTemplate;
 import mypage.model.service.MypageService;
 
 /**
@@ -55,7 +56,7 @@ public class BoardRegistEndServlet extends HttpServlet {
 		//코드리플게시판 boardContent = boardContent + codeContent JSON으로 담기
 		if("CDR".equals(boardCode)) {
 			String codeContent = request.getParameter("codeContent");
-			codeContent = boardContent.replaceAll("<", "&lt;")
+			codeContent = codeContent.replaceAll("<", "&lt;")
 					   .replaceAll(">", "&gt;")
 					   .replaceAll("\\n", "<br>");
 			List<String> list = new ArrayList<>();
@@ -70,10 +71,13 @@ public class BoardRegistEndServlet extends HttpServlet {
 		String originalFileName = request.getParameter("originalFileName");
 		String renamedFileName = request.getParameter("renamedFileName");
 		String boardWriterGrade = request.getParameter("boardWriterGrade");
-		
 //		System.out.println("boardWriter@servlet="+boardWriter);
 		
-		
+		//게시물 수정시 회원등급가져오기
+		if(boardWriterGrade.equals("")) {
+			boardWriterGrade = new GradeTemplate().userGrade(new MypageService().selectUserPoint(boardWriter));
+			
+		}
 		
 		//insert, update 분기점
 		int boardNo = 0;

@@ -119,14 +119,14 @@
 			<input type="text" name="boardWriter" value="<%=bool?b.getBoardWriter():userLoggedIn.getUserId()%>" class="form-control" readonly/>
 		</div>
 		<!-- 작성자등급 -->
-		<input type="hidden" name="boardWriterGrade" value="<%=bool?b.getPoint():""%>"/>
+		<input type="hidden" name="boardWriterGrade" value="<%=bool?b.getBoardWriterGrade():""%>"/>
 		<!-- 게시글종류 선택 -->
 		<div class="form-group  has-feedback">
 			<select name="boardCode" class="form-control" id="boardSelect" required>
 				<option value="" selected="selected">작성하실 게시판 종류를 선택해 주세요.</option>
 				<option value="FRE">자유게시판</option>
 				<option value="CDR">코드리플</option>
-				<option value="JOB">구인구직</option>
+				<option value="JOB">구인공고</option>
 			</select>
 		</div>		
 		<!-- 코드선택 -->
