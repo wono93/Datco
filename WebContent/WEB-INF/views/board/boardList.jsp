@@ -34,8 +34,7 @@
 					<%
 				if (userLoggedIn != null) {
 			%>
-			<input type="button" value="글쓰기" id="btn-add"
-				onclick="location.href='<%=request.getContextPath()%>/board/boardRegist" />
+			<input type="button" value="글쓰기" id="btn-add"/>
 			<%
 				}
 			%>
@@ -83,5 +82,10 @@
 
 		<div id='pageBar'><%=pageBar%></div>
 </section>
+<script>
+$("#btn-add").click(function(){
+	location.href='<%=request.getContextPath()%>/board/boardRegist';
+});
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

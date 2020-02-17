@@ -119,7 +119,7 @@
 			<input type="text" name="boardWriter" value="<%=bool?b.getBoardWriter():userLoggedIn.getUserId()%>" class="form-control" readonly/>
 		</div>
 		<!-- 작성자등급 -->
-		<input type="hidden" name="boardWriterGrade" value="<%=b.getPoint()%>"/>
+		<input type="hidden" name="boardWriterGrade" value="<%=bool?b.getPoint():""%>"/>
 		<!-- 게시글종류 선택 -->
 		<div class="form-group  has-feedback">
 			<select name="boardCode" class="form-control" id="boardSelect" required>
