@@ -41,24 +41,24 @@ form {
 	margin: 0 auto;
 }
 
-input {
+.content>input {
 	width: 100%;
 	height: 50px;
-}
-
-#button {
-	width: 30%;
-	font-size: 20px;
-	background-color:rgb(0, 108, 183); 
-	color: white;
-	margin-left:10px;
 }
 
 #btn {
 	margin: 30px 0 9px;
 }
+#btn>input{
+	width:31%;
+	margin-left:6px;
+	
+}
 #userId,#userName{
 	background:lightgray;
+}
+.content h1{
+	text-align:center;
 }
 </style>
 <body>
@@ -66,7 +66,7 @@ input {
 		onsubmit="return editValidate();">
 		<div id="registerContainer">
 			<div class="content">
-
+				<h1>회원정보 수정</h1>
 				<h3 class="title">
 					<label for="id">아이디</label>
 				</h3>
@@ -97,9 +97,10 @@ input {
 				</h3>
 				<input type="text" id="address" name="address" value="<%=user.getAddress() %>"> 
 				<div id="btn">
-					<input type="button" onclick="updateUser();" id="button" value="정보수정">
-					<input type="button" onclick="passupdateUser();" id="button" value="비밀번호변경">
-					<input type="button" onclick="deleteUser();" id="button" value="회원탈퇴">
+					<input class="btn btn-primary" type="button" value="정보수정" onclick="updateUser();">
+					<input class="btn btn-primary" type="button" value="비밀번호변경" onclick="passupdateUser();">
+					<input class="btn btn-primary" type="button" value="회원탈퇴" onclick="deleteUser();">
+					
 				</div>
 			</div>
 		</div>

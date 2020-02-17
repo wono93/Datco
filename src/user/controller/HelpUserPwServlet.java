@@ -31,10 +31,10 @@ public class HelpUserPwServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//비밀번호 일치시 pw변경폼 돌려주기
 		String userId = request.getParameter("userId");
-		String email = request.getParameter("email");
+		String email = request.getParameter("email_");
 	
-//		System.out.println("userId@servlet"+userId);
-//		System.out.println("email@servlet"+email);
+		System.out.println("userId@servlet"+userId);
+		System.out.println("email@servlet"+email);
 		
 		User passUser= new UserService().selectHelpUserPw(userId,email);
 		//있을 경우 views/user/helpUserPw.jsp
