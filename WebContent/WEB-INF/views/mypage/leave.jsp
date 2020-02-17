@@ -75,7 +75,7 @@ form {
 		name="leaveFrm" method="post">
 		<div id="registerContainer">
 			<div class="content">
-			<h1 class="leave_title">회원탈퇴화면</h1>
+			<h1 class="leave_title">회원탈퇴</h1>
 				<h3 class="title">
 					<label for="password">비밀번호</label>
 				</h3>

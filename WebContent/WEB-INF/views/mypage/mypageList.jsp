@@ -51,7 +51,9 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 			</nav>
 			<article>
 			<div id="usermenu">
+
 				<div id="menuinner" onclick="userEdit()">
+
 					<div id='col-1st'>
 						<div>회원정보 조회 / 수정/ 회원탈퇴</div>
 					</div>
