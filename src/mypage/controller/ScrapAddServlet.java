@@ -32,12 +32,14 @@ public class ScrapAddServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//파라미터핸들링.
 		String userId = request.getParameter("userId");
+		String memo = request.getParameter("memo");
 		int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 		String referer = request.getHeader("Referer");
 		//파라미터 전달 시 간결하게 하기 위해 스크랩으로 변환하여 전달.
 		Scrap s = new Scrap();
 		s.setUserId(userId);
 		s.setBoardNo(boardNo);
+		s.setMemo(memo);
 		
 		
 				//업무로직 // Scraptable에 insert
