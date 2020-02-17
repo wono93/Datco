@@ -186,7 +186,7 @@ label span .checkbox{
     margin: 2px 0;
     border-radius: 2px;
     background-color: #516B82;
-    margin-left: 26px;
+    margin-left:40px;
 }
 .side_account .account_signup {
    
@@ -199,6 +199,9 @@ label span .checkbox{
 }
 .side_account .account_signup a {
     color: #666;
+}
+#login-id ,#login-password{
+	width:100%;
 }
 /*인덱스끝  */
 .footer{

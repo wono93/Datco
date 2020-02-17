@@ -35,14 +35,14 @@ public class HelpUserIdServlet extends HttpServlet {
 		//유저정보 받아오기
 		
 		
-		System.out.println("name@servlet"+name);
-		System.out.println("phone@servlet"+email);
+//		System.out.println("name@servlet"+name);
+//		System.out.println("email@servlet"+email);
 		//있을경우 id 돌려주기
 		User user = new UserService().selectHelpUserId(name,email);
 		String msg = "";
 		String loc="/user/helpUserIdPw";
 		if(user!=null) {
-			msg="일치하는 아이디는"+user.getUserId()+"입니다.";
+			msg="일치하는 아이디는["+user.getUserId()+"]님 입니다.";
 			
 		}else {
 			//없을경우  msg.jsp

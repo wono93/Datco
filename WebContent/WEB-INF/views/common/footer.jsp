@@ -39,7 +39,8 @@
 		<form action="<%=request.getContextPath()%>/user/login" method="post"
 			id="loginForm">
 			<input type="text" placeholder="아이디" name="userId"
-				value="<%=saveIdChecked?userId:"" %>"> <input
+				value="<%=saveIdChecked?userId:"" %>" id="login-id"> 
+			<input
 				type="password" placeholder="비밀번호" name="password"
 				id="login-password">
 			<div class="account_submit">
@@ -51,7 +52,7 @@
 			</div>
 			<div class="account-signup">
 				<a href="<%=request.getContextPath() %>/user/helpUserIdPw">아이디 / 비번
-					찾기</a> &nbsp; &nbsp; &nbsp;<a
+					찾기</a> &nbsp; &nbsp; &nbsp; &nbsp;<a
 					href="<%=request.getContextPath() %>/user/register">회원가입</a>
 			</div>
 		</form>
