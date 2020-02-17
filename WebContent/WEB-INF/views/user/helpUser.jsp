@@ -68,7 +68,7 @@ input#name, input#email, input#userId, input#email_ {
 			<h3 class="title">
 				<label for="name">아이디</label>
 			</h3>
-			<input type="text" id="name" name="userId" placeholder="아이디">
+			<input type="text" id="userId" name="userId" placeholder="아이디">
 			<h3 class="title">
 				<label for="email">이메일</label>
 			</h3>
@@ -89,17 +89,21 @@ input#name, input#email, input#userId, input#email_ {
 		let email_ = $("#email_").val().trim();
 		if (userId == "" || email_ == "") {
 			return false;
+		}else{
+			return true;
 		}
-		return true;
+		return false;
 	}
 	function helpId() {
 		let name = $("#name").val().trim();
 		let email = $("#email").val().trim();
 		if (name == "" || email == "") {
 			return false;
-		}
+		}else{
+			
 		return true;
-
+		}
+		return false;
 	}
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

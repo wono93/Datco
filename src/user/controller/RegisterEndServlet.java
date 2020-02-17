@@ -1,12 +1,14 @@
 package user.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import mypage.model.vo.Point;
 import user.model.service.UserService;
 import user.model.vo.User;
 
@@ -45,7 +47,13 @@ public class RegisterEndServlet extends HttpServlet {
 		
 		User user = new User(userId,userName,nickName,password,email,phone,null,null,address,null);
 		
+		Point p = new Point();
+		p.setUserId(userId);
+		p.setPoint(1000);
+		System.out.println("p@servlet"+p);
+		
 		int result = new UserService().insertUser(user);
+
 		String msg = "";
 		String loc = "";
 		

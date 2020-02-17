@@ -69,6 +69,10 @@ input#newPassword, input#passwordchk, input#password {
 </div>
 </form>
 <script>
+	let oldPwdFlag=false;
+	let	newPwdFlag=false;
+	let chkPwdFlag=false;
+
 	function password_validate() {
 		var pwd_old = $("#password").val().trim();
 		var pwd_new = $("#newPassword").val().trim();
@@ -76,13 +80,10 @@ input#newPassword, input#passwordchk, input#password {
 
 		if (pwd_new == "" || pwd_chk == "")
 			return false;
-		if(pwd_old==pwd_new)
-			$("#newPassword").focus();
-			return false;
 			
-		
 		return true;
 	};
+	
 	$("#password").keyup(function() {
 		var oldpassword = $("#oldpassword").val().trim();
 		var password = $("#password").val().trim();
@@ -91,26 +92,24 @@ input#newPassword, input#passwordchk, input#password {
 			$("#pwdMsg").text("기존 비밀번호와 일치하지 않습니다.").css("color", "red");
 		} else {
 			$("#pwdMsg").text("");
+			oldPwdFlag=true;
 		}
 
 	});
 	$("#newPassword").keyup(function() {
-		var oldpassword = $("#oldpassword").val().trim();
-		var newpassword = $("#newPassword").val().trim();
-
-		 if (oldpassword == newpassword) {
-			$("#newpwdMsg").text("기존비밀번호와 같습니다.");
-			$("#newpwdMsg").css("color", "red");
-
-		} 
-
+		var oldpassword = $("#oldpassword").val();
+		var newpassword = $("#newPassword").val();
+		
+		
+		
 		 var regpass = /^(?=.*\d)(?=.*\w).{6,16}$/g;
-		if (!regpass.test(password)) {
+		if (!regpass.test(newpassword)) {
 			$("#newpwdMsg").text("6~16자 영문 대 소문자, 숫자를 사용하세요.");
 			$("#newpwdMsg").css("color", "red");
 
 		}else {
 			$("#newpwdMsg").text("");
+			newPwdFlag=true;
 		}
 
 	});
@@ -120,16 +119,14 @@ input#newPassword, input#passwordchk, input#password {
 		var password2 = $("#passwordchk");
 
 		if (password.val() != password2.val()) {
-			$("#pwdchkMsg").text("변경할 비밀번호가 일치하지않습니다.");
+			$("#pwdchkMsg").text("비밀번호가 일치하지않습니다.");
 			$("#pwdchkMsg").css("color", "red");
-			return false
 		} else {
-			$("#pwdchkMsg").text("변경할 비밀번호가 일치합니다.");
+			$("#pwdchkMsg").text("비밀번호가 일치합니다.");
 			$("#pwdchkMsg").css("color", "green");
-
-			return true;
+			chkPwdFlag=true;
 		}
-		return true;
+	
 	});
 </script>
 
