@@ -26,7 +26,8 @@
 			<h4><%=title.get(boardCode)%></h4>
 			
 			<div id="searchArea">
-				<form action="<%=request.getContextPath()%>/board/boardSearch">
+				<form action="<%=request.getContextPath()%>/board/boardSearch" method="POST" >
+				<!-- onsubmit="return searchOnsubmit();" --> 
 					<div class="form-row align-items-center">
 					  <div class="col-auto">
 					    <div class="input-group mb-2">
@@ -39,7 +40,7 @@
 						      </select>
 					        </div>
 					      </div>
-					      <input name="searchText" type="text" class="form-control" id="inlineFormInputGroup" placeholder="검색어를 입력하세요">
+					      <input name="searchText" type="text" class="form-control" id="searchInputValue" placeholder="검색어를 입력하세요">
 					    </div>
 					  </div>
 					  <div class="col-auto">
@@ -69,6 +70,7 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>날짜</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -85,6 +87,7 @@
 						</a></td>
 						<td><%=b.getBoardWriter()%></td>
 						<td><%=b.getBoardRegDate()%></td>
+						<td><%=b.getReadCnt()%></td>
 <%
 						}
 					}else{
@@ -103,6 +106,14 @@
 		<div id='pageBar'><%=pageBar%></div>
 </section>
 <script>
+/* function searchOnsubmit(){
+	let $inputText = $("#searchInputValue");
+	alert($inputText.val().trim().length());
+	if($inputText.val().trim().length() >= 2)
+		return true;
+	$inputText.attr("placeholder","검색어는 2자리 이상입력해주세요!");
+	return false;
+} */
 $("#btn-add").click(function(){
 	location.href='<%=request.getContextPath()%>/board/boardRegist';
 });

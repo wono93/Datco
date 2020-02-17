@@ -36,9 +36,10 @@ public class BoardSearchServlet extends HttpServlet {
 		String searchText = request.getParameter("searchText");
 		String searchType = request.getParameter("searchType");
 		
-		System.out.println(boardCode);
-		System.out.println(boardCode);
-		System.out.println(boardCode);
+		//DB **boardWriter의 컬럼명은 userId**
+		if("boardWriter".equals(searchType))
+			searchType = "userId";
+		
 		final int numPerPage = 10;	//한페이지당 수
 		int cPage = 1;				//현재 페이지
 		final int pageBarSize = 5;	//페이지바 최대크기
@@ -53,10 +54,9 @@ public class BoardSearchServlet extends HttpServlet {
 		int pageEnd = pageStart+pageBarSize-1;
 		int pageNo = pageStart;
 		
-		int totalBoardCount = new BoardService().selectBoardCount(boardCode);
-		int totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
 		List<Board> list = new BoardService().selectBoardSearch(boardCode, searchType, searchText, cPage, numPerPage);
-
+		int totalBoardCount = list.size();
+		int totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
 		
 		
 		String pageBar = new BoardPaging().pagingBar(request.getContextPath(), boardCode, cPage, pageNo, pageEnd, totalPage);

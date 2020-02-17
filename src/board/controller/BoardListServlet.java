@@ -57,7 +57,6 @@ public class BoardListServlet extends HttpServlet {
 		int pageStart = ((cPage - 1)/pageBarSize) * pageBarSize +1;
 		int pageEnd = pageStart+pageBarSize-1;
 		int pageNo = pageStart;
-		String pageBar = new BoardPaging().pagingBar(request.getContextPath(), boardCode, cPage, pageNo, pageEnd, totalPage);
 		if("REP".equals(boardCode)){
 			//신고게시판 -> 신고수 10개 이상인 것만 보여주기
 			totalBoardCount = new BoardService().selectRepBoardCount(REPORTCOUNT);
@@ -73,15 +72,14 @@ public class BoardListServlet extends HttpServlet {
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
 			list = boardService.selectBoardList(cPage, numPerPage, boardCode);
 		}
+		String pageBar = new BoardPaging().pagingBar(request.getContextPath(), boardCode, cPage, pageNo, pageEnd, totalPage);
 
 		if(list!=null) {
-			System.out.println("11");
 			request.setAttribute("list", list);
 			request.setAttribute("pageBar", pageBar);
 			request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp").forward(request, response);
 		}
 		else if(dlist!=null) {
-			System.out.println("2");
 			request.setAttribute("dlist", dlist);
 			request.setAttribute("pageBar", pageBar);
 			request.getRequestDispatcher("/WEB-INF/views/board/adminBoardList.jsp").forward(request, response);
