@@ -18,7 +18,6 @@
 h2 {
 	text-align: center;
 }
-
 #content {
 	text-align: center;
 	align-items: center;
@@ -29,7 +28,6 @@ form {
 form#eachuser {
 	display: inline;
 }
-
  table {
     width: 100%;
     border-top: 1px solid #444444;
@@ -92,13 +90,10 @@ form#eachuser {
 		</table>
 </div>
 <script>
-
 $(function(){
 	delcursor();
 	boardInquey();
 })
-
-
 function boardInquey(){
 	$(".boardInquery").css("cursor","pointer").css("background-color", "rgba(0, 108, 183, 0.1)")
 	  .on("click",function(e){
@@ -137,8 +132,6 @@ function delcursor(){
 			});
  	 });
 }
-
-
 </script>
 <input type="button" onclick="self.close();" value="닫기" />
 </body>
