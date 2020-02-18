@@ -156,11 +156,29 @@ form#eachuser {
 					console.log(x,s,e);
 				}
 			});
-			
-			
-			
 		}
-		
+		$(function(){
+			boardInquey();
+		})
+
+
+		function boardInquey(){
+			$(".boardInquery").css("cursor","pointer").css("background-color", "rgba(0, 108, 183, 0.1)")
+			  .on("click",function(e){
+				  
+					let boardNo = $(this).children(['[name=openNo]']).val();
+					console.log(boardNo);
+				  let url = '<%=request.getContextPath() %>/board/boardView?boardNo='+boardNo;
+				  if(opener.closed) {   //부모창이 닫혔는지 여부 확인
+				      window.open(url, "openWin");
+				   } else {
+				      opener.location.href = url;
+				      opener.focus();
+				   }
+				  
+			  });
+				
+		}
 		</script>
 		
 		<br />
@@ -189,7 +207,7 @@ form#eachuser {
             <tr>
                 <td><%=b.getBoardCode()%></td>
 				<td><%=b.getBoardOption()%></td>
-                <td> <a href="<%=request.getContextPath() %>/board/boardView?boardNO=<%=b.getBoardNo()%>" target="_PARENT"><%=b.getBoardTitle()%> </a></td>
+				<td><span class="boardInquery"><input type="hidden" name="openNo" value="<%=b.getBoardNo()%>"><%=b.getBoardTitle()%></span></td>
 				<td><%=b.getBoardRegDate()%></td>
                 <td>
 				    <a href="<%=request.getContextPath() %>/board/boardView?boardNO=<%=b.getBoardNo()%>" target="_PARENT">
