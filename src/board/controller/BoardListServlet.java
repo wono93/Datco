@@ -9,11 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
 import board.model.vo.DelBoard;
 import common.BoardPaging;
+import mypage.model.service.MypageService;
+import mypage.model.vo.BlackList;
+import user.model.vo.User;
 
 /**
  * Servlet implementation class BoardListServlet
@@ -43,12 +47,18 @@ public class BoardListServlet extends HttpServlet {
 		int totalBoardCount = 0;
 		int totalPage = 0;
 		
-		
 		try{
 			cPage = Integer.parseInt(request.getParameter("cPage"));
 		} catch(NumberFormatException e){
 			
 		}
+		
+		//회원의 블랙리스트가 존재하는지 확인하기
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("userLoggedIn");
+		List<BlackList> blackList = null;
+		if(user != null)
+			blackList = new MypageService().selectBlackList(user.getUserId());
 		
 		List<Board> list = null;
 		List<DelBoard> dlist = null;
@@ -70,7 +80,7 @@ public class BoardListServlet extends HttpServlet {
 		}else {
 			totalBoardCount = new BoardService().selectBoardCount(boardCode);
 			totalPage = (int)Math.ceil((double)totalBoardCount/numPerPage);
-			list = boardService.selectBoardList(cPage, numPerPage, boardCode);
+			list = boardService.selectBoardList(cPage, numPerPage, boardCode, blackList);
 		}
 		String pageBar = new BoardPaging().pagingBar(request.getContextPath(), boardCode, cPage, pageNo, pageEnd, totalPage);
 

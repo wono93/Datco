@@ -17,6 +17,7 @@ import board.model.vo.Board;
 import board.model.vo.BoardComment;
 import board.model.vo.DelBoard;
 import board.model.vo.SelectedComment;
+import mypage.model.vo.BlackList;
 
 public class BoardDAO {
 
@@ -411,11 +412,19 @@ public class BoardDAO {
 		return result;
 	}
 
-	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage, String boardCode) {
+	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage, String boardCode, List<BlackList> blackList) {
 		List<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectBoardList");
+		String notLike = "";
+		if(blackList!=null && blackList.size()>0) {
+			notLike += " AND NOT REGEXP_LIKE (USERID, '"+blackList.get(0).getBlackId();
+			for (int i = 1; i < blackList.size(); i++) 
+				notLike += "|"+blackList.get(i).getBlackId();
+			notLike += "') ";
+		}
+		System.out.println(notLike);
 		try {
 			pstmt = conn.prepareStatement(query);
 			// 시작 rownum과 마지막 rownum 구하는 공식
