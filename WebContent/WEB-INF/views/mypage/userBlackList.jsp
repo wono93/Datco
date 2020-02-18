@@ -74,8 +74,6 @@ form#eachuser {
 <body>
 	<h2><%=userLoggedIn.getNickName()%>님의 차단 유저 리스트</h2>
 	<section id="content">
-
-
 		<form id="BlackListAddForm" method="post">
 			<input type="hidden" name="delUserId"
 				value="<%=userLoggedIn.getUserId()%>" />
@@ -90,7 +88,6 @@ form#eachuser {
 		</form>
 		<br />
 		<br />
-		
 <script>
 		
 		
@@ -123,8 +120,6 @@ $("#btn_add").click(function(){
 				alert('차단등록 되었습니다. 리스트를 확인해주세요.');	
 				location.reload();
 			}
-			
-			
 		}, 
 		error: function(x,s,e){
 			console.log(x,s,e);
