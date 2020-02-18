@@ -8,7 +8,6 @@
 	overflow-y: hidden;
 	overflow-x: auto;
 }
-
 .btn {
 	padding: 6px 12px;
 	font-size: 14px;
@@ -109,9 +108,9 @@
 	width: 47px;
 }
 
-#boardTitleM {
+#boardTitle {
 	font-weight: 800;
-	font-size: 2.5em;
+	font-size: 3em;
 }
 #content{
 	margin: 0 0 50px 0;
@@ -122,17 +121,13 @@
 	border: 1px solid gray;
 }
 
-#boardwriter {
-	padding: 20px 30px;
-	border: 1px solid gray;
-}
 .boardview {
 	padding: 10px 10px;
 	border-radius: 5px;
 	background: white;
 }
 table#tbl-comment sub.comment-content {
-	font-size: 18px; 
+	font-size: 16px; 
 }
 #comment-container {
 	border: 1px solid gray;
