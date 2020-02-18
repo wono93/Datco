@@ -8,6 +8,7 @@ import board.model.vo.Board;
 import board.model.vo.BoardComment;
 import board.model.vo.DelBoard;
 import board.model.vo.SelectedComment;
+import mypage.model.vo.BlackList;
 
 import static common.JDBCTemplate.*;
 
@@ -158,9 +159,9 @@ public class BoardService {
 		return result;
 	}
 	
-	public List<Board> selectBoardList(int cPage, int numPerPage, String boardCode) {
+	public List<Board> selectBoardList(int cPage, int numPerPage, String boardCode, List<BlackList> blackList) {
 		Connection conn = getConnection();
-		List<Board> list= new BoardDAO().selectBoardList(conn, cPage, numPerPage, boardCode);
+		List<Board> list= new BoardDAO().selectBoardList(conn, cPage, numPerPage, boardCode, blackList);
 		close(conn);
 		return list;
 	}
