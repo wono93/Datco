@@ -289,5 +289,21 @@ public class BoardService {
 		return myCurBoardt;
 	}
 
+	
+	public List<Board> selectMyBoardList(int cPage, int numPerPage, String userId) {
+		//유저가 작성한 board들 전달해주기
+		Connection conn = getConnection();
+		List<Board> list= new BoardDAO().selectMyBoardList(conn, cPage, numPerPage, userId);
+		
+		close(conn);
+		return list;		
+	}
+	public int selectMyBoardCount(String userId) {
+		Connection conn = getConnection();
+		int result = new BoardDAO().selectMyBoardCount(conn, userId);
+		close(conn);
+		return result;
+	}
+
 
 }
