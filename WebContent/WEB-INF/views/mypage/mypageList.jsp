@@ -42,7 +42,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 			<nav id="topMenu">
 				<ul class="navi">
 					<li onclick="userEdit()">회원정보 조회 / 수정/ 회원탈퇴</li>
-					<li>나의 글 보기</li>
+					<li onclick="userBoardList()">나의 글 보기</li>
 					<li>나의 댓글 보기</li>
 					<li onclick="blackListInquery()">블랙리스트 조회</li>
 					<li onclick="scrapInquery();">스크랩 조회</li>
@@ -66,7 +66,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 			</div>
 			</article>
 			<article>
-			<div id="usermenu">
+			<div id="usermenu" onclick="userBoardList();">
 				<div id="menuinner">
 					<div id='col-1st'>
 						<div>나의 글 보기</div>
@@ -155,6 +155,9 @@ function userEdit(){
 	location.href = "<%=request.getContextPath()%>/mypage/userEdit?userId=<%=userLoggedIn.getUserId()%>";
 }
 
+function userBoardList(){
+	location.href = "<%=request.getContextPath()%>/mypage/userBoardList?userId=<%=userLoggedIn.getUserId()%>";
+}
 
 
 </script>
