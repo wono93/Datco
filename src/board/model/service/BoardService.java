@@ -19,8 +19,11 @@ public class BoardService {
 	}
 
 	public List<BoardComment> selectBoardCommentWriter(String userId) {
-		// 유저가 작성한 comment 전달해주기
-		return null;
+		Connection conn = getConnection();
+		List<BoardComment> cmtList = new BoardDAO().selectBoardCommentWriter(conn, userId);
+		
+		close(conn);
+		return cmtList;
 	}
 
 	public Board selectBoardNo(int boardNo, boolean hasRead) {

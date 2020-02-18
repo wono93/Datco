@@ -19,6 +19,8 @@ public class BoardComment implements Serializable {
 	private Date cmtRegDate;
 	private int Recommend;
 	private int reported;
+	private String boardCode;
+	private String boardTitle;
 	
 	public BoardComment() {
 		super();
@@ -42,12 +44,30 @@ public class BoardComment implements Serializable {
 
 
 
+
+	public BoardComment(int cmtNo, String cmtWriter, String cmtWriterGrade, int boardNo, int cmtLevel, int cmtRefNo,
+			String cmtContent, Date cmtRegDate, int recommend, int reported, String boardCode, String boardTitle) {
+		super();
+		this.cmtNo = cmtNo;
+		this.cmtWriter = cmtWriter;
+		this.cmtWriterGrade = cmtWriterGrade;
+		this.boardNo = boardNo;
+		this.cmtLevel = cmtLevel;
+		this.cmtRefNo = cmtRefNo;
+		this.cmtContent = cmtContent;
+		this.cmtRegDate = cmtRegDate;
+		Recommend = recommend;
+		this.reported = reported;
+		this.boardCode = boardCode;
+		this.boardTitle = boardTitle;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardComment [cmtNo=" + cmtNo + ", cmtWriter=" + cmtWriter + ", cmtWriterGrade=" + cmtWriterGrade
 				+ ", boardNo=" + boardNo + ", cmtLevel=" + cmtLevel + ", cmtRefNo=" + cmtRefNo + ", cmtContent="
 				+ cmtContent + ", cmtRegDate=" + cmtRegDate + ", Recommend=" + Recommend + ", reported=" + reported
-				+ "]";
+				+ ", boardCode=" + boardCode + ", boardTitle=" + boardTitle + "]";
 	}
 
 	public String getCmtWriterGrade() {
@@ -111,6 +131,21 @@ public class BoardComment implements Serializable {
 	}
 	public void setReported(int reported) {
 		this.reported = reported;
+	}
+
+	public String getBoardCode() {
+		return boardCode;
+	}
+	public void setBoardCode(String boardCode) {
+		this.boardCode = boardCode;
+	}
+
+	public String getBoardTitle() {
+		return boardTitle;
+	}
+
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
 	}
 
 	

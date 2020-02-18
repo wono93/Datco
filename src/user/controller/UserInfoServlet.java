@@ -42,11 +42,13 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		String nickName = request.getParameter("nickName");
 		System.out.println(nickName);
 		User user = new UserService().selectOnebyNick(nickName);		
-		System.out.println("===========servlet@user=="+user);
 		String userId = user.getUserId();
 		
 		
 		Point point = new MypageService().getPoint(userId);
+		point.setUserGrade(new GradeTemplate().userGrade(point.getPoint()));
+		System.out.println("===========servlet@user=="+user);
+		
 		List<Board> myCurrentBoard = new BoardService().myCurrentBoard(userId);
 		int myCmtTotals = new BoardService().myCmtTotal(userId);
 		int myBoardTotals = new BoardService().myBoardTotal(userId);

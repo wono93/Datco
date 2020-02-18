@@ -62,7 +62,7 @@ form#eachuser {
 </style>
 </head>
 <body>
-	<h2>testpage</h2>
+	<h2> &gt&gt<%=user.getNickName() %>&lt&lt님의 회원정보</h2>
 
 	<div>
 		<table class="table table-user-information">
@@ -72,7 +72,7 @@ form#eachuser {
 				</tr>
 				<tr>
 					<td>닉네임:</td>
-					<td><img src='<%=request.getContextPath()%>/images/"+blackUser.userGrade+"' alt='' style='width:20px;' class='message_box'><%=user.getNickName() %></td>
+					<td><img src='<%=request.getContextPath()%>/images/<%=point.getUserGrade() %>' alt='' style='width:20px;' class='message_box'><%=user.getNickName() %></td>
 					
 					<td>아이디:</td>
 					<td><%=user.getUserId() %></td>
@@ -150,7 +150,8 @@ form#eachuser {
 				success : function(data) {
 					
 					alert('업데이트 완료');
-					window.open.reload();
+					location.reload();
+
 				},
 				error: function(x,s,e){
 					console.log(x,s,e);
@@ -210,8 +211,7 @@ form#eachuser {
 				<td><span class="boardInquery"><input type="hidden" name="openNo" value="<%=b.getBoardNo()%>"><%=b.getBoardTitle()%></span></td>
 				<td><%=b.getBoardRegDate()%></td>
                 <td>
-				    <a href="<%=request.getContextPath() %>/board/boardView?boardNO=<%=b.getBoardNo()%>" target="_PARENT">
-						게시글 보기   </a>
+				   <span class="boardInquery"><input type="hidden" name="openNo" value="<%=b.getBoardNo()%>"><%=b.getBoardTitle()%> 게시글 보기 </span>
                 </td>		
             </tr>		
        		 <%		} 

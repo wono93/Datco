@@ -14,20 +14,18 @@ import com.google.gson.Gson;
 
 import board.model.service.BoardService;
 import board.model.vo.BoardComment;
-import common.GradeTemplate;
-import mypage.model.vo.BlackList;
 
 /**
- * Servlet implementation class UserCmtListServlet
+ * Servlet implementation class UserCmtListLoadingServlet
  */
-@WebServlet("/mypage/myCmtList")
-public class UserCmtListServlet extends HttpServlet {
+@WebServlet("/mypage/myCmtListLoad")
+public class UserCmtListLoadingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserCmtListServlet() {
+    public UserCmtListLoadingServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +34,19 @@ public class UserCmtListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//유저가 작성한 댓글목록 출력하기
 
-			String userId = request.getParameter("userId");
-			
-			// 유저의 블랙리스트 jsp 돌려주기
-			request.setAttribute("userId", userId);
-			request.getRequestDispatcher("/WEB-INF/views/mypage/userCmtList.jsp").forward(request, response);
-			
+		String userId = request.getParameter("userId");
+		List<BoardComment> cmtList = new BoardService().selectBoardCommentWriter(userId);
+		
+		for(BoardComment c : cmtList) {
+			c.setCmtWriterGrade(c.getCmtWriterGrade()+".png");
+		}
+		
+		//views/mypage/userBoardComment.jsp
+		String gsonblist = new Gson().toJson(cmtList);
+		response.setContentType("application/json; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.write(gsonblist);
 
 	}
 

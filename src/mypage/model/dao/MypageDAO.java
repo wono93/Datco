@@ -54,7 +54,7 @@ public class MypageDAO {
 				s.setScrapRegDate(rset.getDate("scrapRegDate"));
 				s.setBoardWriter(rset.getString("boardWriter"));
 				s.setBoardTitle(rset.getString("boardTitle"));
-				System.out.println("each scrap DAO==========="+s);
+//				System.out.println("each scrap DAO==========="+s);
 				list.add(s);
 			}
 			System.out.println("list DAO======="+list.toString());
@@ -261,7 +261,7 @@ public class MypageDAO {
 			close(pstmt);
 		}
 		
-		System.out.println("DAO===blackList==pointLog==="+blackList);
+//		System.out.println("DAO===blackList==pointLog==="+blackList);
 		
 		return point;
 	}
@@ -331,6 +331,41 @@ public class MypageDAO {
 			close(pstmt);
 		}
 		return pointResult;
+	}
+
+	public List<Scrap> selectScrapExist(Connection conn, String userId, int boardNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectScrapExist");
+		System.out.println(query);
+		List<Scrap> list = new ArrayList<>();
+		try {
+			
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, boardNo);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Scrap s = new Scrap();
+				s.setUserId(rset.getString("userId"));
+				s.setMemo(rset.getString("memo"));
+				s.setBoardNo(rset.getInt("boardNo"));
+				s.setScrapRegDate(rset.getDate("scrapRegDate"));
+				s.setBoardWriter(rset.getString("boardWriter"));
+				s.setBoardTitle(rset.getString("boardTitle"));
+//				System.out.println("each scrap DAO==========="+s);
+				list.add(s);
+			}
+			System.out.println("list DAO==selectScrapExist====="+list.toString());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 }
 
