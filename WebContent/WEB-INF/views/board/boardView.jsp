@@ -200,23 +200,23 @@
 		<% } %>
 		<input type="button" value="새 글 작성" onclick="location.href='<%=request.getContextPath() %>/board/boardRegist'" id="addboard" class="btn btn-primary btn-wide pull-right" />
 	</div>
-	<!-- 게시글 작성자(작성자의 등급, 등급에 맞는 이미지, 작성자 이름표시, 클릭시 마이페이지 이동 / 미 로그인시 등급이미지,태그삭제) -->
-	<div id="boardwriter" class="boardview">
-		<% if(userLoggedIn != null &&
-				b.getBoardWriter().equals(userLoggedIn.getUserId())){ %>
-			<a href="<%=request.getContextPath()%>/mypage/mypageList?userId=<%=userLoggedIn.getUserId()%>">
-				<img src="<%=request.getContextPath()%>/images/<%=b.getBoardWriterGrade() %>" alt="" width="50px"/>
-				<h3><%=b.getBoardWriter()%></h3>
-			</a>
-		<% } else { %>
-			<img src="<%=request.getContextPath()%>/images/none.png" alt="" width="50px"/>
-				<h3><%=b.getBoardWriter()%></h3>
-		<% } %>
-	</div>
 	<div id="boardcontent" class="boardview">
 		<div id="boardinfo" class="boardview">
 			<!-- 게시글제목 -->
-			<p><div name="boardTitle" id="boardTitleM"><%=b.getBoardTitle() %>
+			<p><div name="boardTitle" id="boardTitle"><%=b.getBoardTitle() %></div></p>
+			<hr />
+	<!-- 게시글 작성자(작성자의 등급, 등급에 맞는 이미지, 작성자 이름표시, 클릭시 마이페이지 이동 / 미 로그인시 등급이미지,태그삭제) -->
+	<div id="boardwriter">
+		<% if(userLoggedIn != null && b.getBoardWriter().equals(userLoggedIn.getUserId())){ %>
+			<a href="<%=request.getContextPath()%>/mypage/mypageList?userId=<%=userLoggedIn.getUserId()%>">
+				<img src="<%=request.getContextPath()%>/images/<%=b.getBoardWriterGrade() %>" alt="" width="30px" style="padding-bottom: 10px;"/>
+				<span style="font-size: 2.3em;"><%=b.getBoardWriter()%></span>
+			</a>
+		<% } else { %>
+				<img src="<%=request.getContextPath()%>/images/none.png" alt="" width="30px" style="padding-bottom: 10px;"/>
+				<span style="font-size: 2.3em;"><%=b.getBoardWriter()%></span>
+		<% } %>
+	</div>
 				<!-- 스크랩 -->
 				<div id="scrap">
 				<% if(userLoggedIn != null) {%>
@@ -229,7 +229,6 @@
 					</form>
 					<% } %>
 				</div>
-			</div></p>
 			<div id="rpt">
 				<!--게시글 신고하기 -->
 				<% if(userLoggedIn!=null){%>
@@ -300,9 +299,7 @@
 					<!-- 답글버튼 -->
 					<button class="btn btn-light" style="margin:3px;" value="<%=bc.getCmtNo()%>">답글</button>
 					<!-- 삭제버튼(작성자와 관리자에게만 노출) -->
-					<% if(userLoggedIn!=null && 
-							 (bc.getCmtWriter().equals(userLoggedIn.getUserId()) ||
-							 "A".equals(userLoggedIn.getUserRole()))){ %>
+					<% if(userLoggedIn!=null && (bc.getCmtWriter().equals(userLoggedIn.getUserId()) || "A".equals(userLoggedIn.getUserRole()))){ %>
 					<button class="btn btn-danger" style="margin:3px;" value="<%=bc.getCmtNo()%>">삭제</button>
 					<% } %>
 				</td>
