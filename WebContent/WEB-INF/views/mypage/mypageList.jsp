@@ -43,7 +43,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 				<ul class="navi">
 					<li onclick="userEdit()">회원정보 조회 / 수정/ 회원탈퇴</li>
 					<li onclick="userBoardList()">나의 글 보기</li>
-					<li>나의 댓글 보기</li>
+					<li onclick="userCommnetList()">나의 댓글 보기</li>
 					<li onclick="blackListInquery()">블랙리스트 조회</li>
 					<li onclick="scrapInquery();">스크랩 조회</li>
 					<li>쪽지함</li>
@@ -55,11 +55,11 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 				<div id="menuinner" onclick="userEdit()">
 
 					<div id='col-1st'>
-						<div>회원정보 조회 / 수정/ 회원탈퇴</div>
+						<div>회원정보 조회</div>
 					</div>
 					<hr />
 					<div>
-						<div>정보 조회 및 수정, 탈퇴</div>
+						<div>정보 조회, 수정  및 탈퇴</div>
 					</div>
 				</div>
 
@@ -73,20 +73,20 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					</div>
 					<hr />
 					<div>
-						<div>작성한 모든 글 조회</div>
+						<div>내가 작성한 모든 글 조회</div>
 					</div>
 				</div>
 			</div>
 			</article>
 			<article>
-			<div id="usermenu">
+			<div id="usermenu" onclick="userCommnetList()"> 
 				<div id="menuinner">
 					<div id='col-1st'>
 						<div>나의 댓글 보기</div>
 					</div>
 					<hr />
 					<div>
-						<div>손님으로 방문하기</div>
+						<div>내가 작성한 모든 댓글 조회</div>
 					</div>
 				</div>
 			</div>
@@ -100,7 +100,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					</div>
 					<hr />
 					<div>
-						<div>차단한 회원 조회하기</div>
+						<div>차단한 회원 조회, 추가 , 삭제</div>
 					</div>
 				</div>
 			</div>
@@ -113,7 +113,7 @@ div#col-1st {font-size: 2em; color: black; display: inline-flex;}
 					</div>
 					<hr />
 					<div>
-						<div>스크랩 한 게시글 목록 보기</div>
+						<div>스크랩으로 모아둔 글 조회, 추가, 삭제</div>
 					</div>
 				</div>
 			</div>
@@ -144,12 +144,15 @@ $(function(){
 function blackListInquery(){
 	let url = "<%=request.getContextPath()%>/mypage/userBlackList?userId=<%=userLoggedIn.getUserId()%>";
 	open(url, "blackList", "left= 100px, top=100px, width=820px, height=500px");
-	console.log('dkdkdkdkd');
 }
 function scrapInquery(){
 	let url = "<%=request.getContextPath()%>/mypage/scrap?userId=<%=userLoggedIn.getUserId()%>";
 	open(url, "ScrapList", "left= 100px, top=100px, width=820px, height=400px");
-	console.log('dkdkdkdkd');
+}
+
+function userCommnetList(){
+	let url = "<%=request.getContextPath()%>/mypage/myCmtList?userId=<%=userLoggedIn.getUserId()%>";
+	open(url, "ScrapList", "left= 100px, top=100px, width=820px, height=400px");
 }
 function userEdit(){
 	location.href = "<%=request.getContextPath()%>/mypage/userEdit?userId=<%=userLoggedIn.getUserId()%>";

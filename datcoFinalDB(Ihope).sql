@@ -23,7 +23,7 @@ WITH LIST AS
     FROM  all_tab_columns A,
            all_col_comments B
     WHERE  A.OWNER = B.OWNER
-    AND    A.TABLE_NAME = B.TABLE_pNAME
+    AND    A.TABLE_NAME = B.TABLE_NAME
     AND    A.COLUMN_NAME = B.COLUMN_NAME
     AND    A.OWNER = 'DATCO'   -- DB명
 ),
@@ -308,7 +308,7 @@ CREATE TABLE Tb_Message
     title varchar2(200) not null,
     msgContent varchar2(4000)  NOT NULL,
     sendDate DATE default sysdate NOT NULL,
-    readornot DATE default sysdate null,
+    readornot DATE null,
     constraint PK_Tb_message_no primary key(message_no),
     CONSTRAINT FK_Tb_Message_getUser_Tb_user FOREIGN KEY (getUser) REFERENCES Tb_user (userId) on delete set null,
     CONSTRAINT FK_Tb_Message_sendUser_Tb_user FOREIGN KEY (sendUser) REFERENCES Tb_user (userId) on delete set null

@@ -17,7 +17,6 @@ import board.model.vo.Board;
 import board.model.vo.BoardComment;
 import board.model.vo.DelBoard;
 import board.model.vo.SelectedComment;
-import mypage.model.dao.MypageDAO;
 
 public class BoardDAO {
 
@@ -854,6 +853,44 @@ public class BoardDAO {
 				b.setBoardRegDate(rset.getDate("boardRegDate"));
 				list.add(b);
 				System.out.println(b);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<BoardComment> selectBoardCommentWriter(Connection conn, String userId) {
+		List<BoardComment> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBoardCommentWriter");
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			
+			System.out.println("query");
+			while (rset.next()) {
+				BoardComment c = new BoardComment();
+				c.setCmtNo(rset.getInt("cmtNo"));
+				c.setCmtWriter(rset.getString("userId"));
+				c.setBoardNo(rset.getInt("board_No"));
+				c.setCmtLevel(rset.getInt("cmtLevel"));
+				c.setCmtContent(rset.getString("cmtContent"));
+				c.setCmtRegDate(rset.getDate("cmtregDate"));
+				c.setReported(rset.getInt("reported"));
+				c.setCmtWriterGrade(rset.getString("userGrade"));
+				c.setBoardCode(rset.getString("boardCode"));
+				c.setBoardTitle(rset.getString("boardTitle"));
+				list.add(c);
+				System.out.println(c);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
