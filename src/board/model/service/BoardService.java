@@ -8,6 +8,7 @@ import board.model.vo.Board;
 import board.model.vo.BoardComment;
 import board.model.vo.DelBoard;
 import board.model.vo.SelectedComment;
+import mypage.model.vo.BlackList;
 
 import static common.JDBCTemplate.*;
 
@@ -19,8 +20,11 @@ public class BoardService {
 	}
 
 	public List<BoardComment> selectBoardCommentWriter(String userId) {
-		// 유저가 작성한 comment 전달해주기
-		return null;
+		Connection conn = getConnection();
+		List<BoardComment> cmtList = new BoardDAO().selectBoardCommentWriter(conn, userId);
+		
+		close(conn);
+		return cmtList;
 	}
 
 	public Board selectBoardNo(int boardNo, boolean hasRead) {
@@ -155,9 +159,9 @@ public class BoardService {
 		return result;
 	}
 	
-	public List<Board> selectBoardList(int cPage, int numPerPage, String boardCode) {
+	public List<Board> selectBoardList(int cPage, int numPerPage, String boardCode, List<BlackList> blackList) {
 		Connection conn = getConnection();
-		List<Board> list= new BoardDAO().selectBoardList(conn, cPage, numPerPage, boardCode);
+		List<Board> list= new BoardDAO().selectBoardList(conn, cPage, numPerPage, boardCode, blackList);
 		close(conn);
 		return list;
 	}
@@ -287,6 +291,22 @@ public class BoardService {
 		List<Board> myCurBoardt= new BoardDAO().selectBoardSearch(conn, boardCode, searchType, searchText, cPage, numPerPage);
 		close(conn);
 		return myCurBoardt;
+	}
+
+	
+	public List<Board> selectMyBoardList(int cPage, int numPerPage, String userId) {
+		//유저가 작성한 board들 전달해주기
+		Connection conn = getConnection();
+		List<Board> list= new BoardDAO().selectMyBoardList(conn, cPage, numPerPage, userId);
+		
+		close(conn);
+		return list;		
+	}
+	public int selectMyBoardCount(String userId) {
+		Connection conn = getConnection();
+		int result = new BoardDAO().selectMyBoardCount(conn, userId);
+		close(conn);
+		return result;
 	}
 
 

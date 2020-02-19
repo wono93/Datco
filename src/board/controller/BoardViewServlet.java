@@ -72,6 +72,9 @@ public class BoardViewServlet extends HttpServlet {
 		}
 		
 		Board board = new BoardService().selectBoardNo(boardNo, hasRead);
+		
+		if(boardCode == null) boardCode = board.getBoardCode();
+		
 		//System.out.println("board.getBoardCode()@ViewServlet="+board.getBoardCode());
 		List<BoardComment> commentList = new BoardService().selectCommentList(boardNo);
 		SelectedComment selc = null;

@@ -9,19 +9,52 @@
 
 --4. 테이블 생성입니다.
 
-SELECT A.TABLE_NAME AS "테이블명",
-       A.COLUMN_NAME AS "컬럼명",
-       A.DATA_TYPE AS "데이터타입",
-       A.DATA_LENGTH AS "길이",
-       A.NULLABLE AS "Null 여부",
-       B.COMMENTS AS "Comments"
-FROM   dba_tab_columns A,
-       all_col_comments B
-WHERE  A.OWNER = B.OWNER
-AND    A.TABLE_NAME = B.TABLE_NAME
-AND    A.COLUMN_NAME = B.COLUMN_NAME
-AND    A.OWNER = 'datco'
-ORDER BY A.TABLE_NAME;
+select table_name, column_name from all_tab_columns;
+select * from all_tab_columns where owner='DATCO';
+
+WITH LIST AS
+(
+    SELECT A.TABLE_NAME,
+           A.COLUMN_NAME,
+           A.DATA_TYPE,
+           A.DATA_LENGTH,
+           A.NULLABLE,
+           B.COMMENTS
+    FROM  all_tab_columns A,
+           all_col_comments B
+    WHERE  A.OWNER = B.OWNER
+    AND    A.TABLE_NAME = B.TABLE_NAME
+    AND    A.COLUMN_NAME = B.COLUMN_NAME
+    AND    A.OWNER = 'DATCO'   -- DB명
+),
+PKLIST AS
+(
+    SELECT C.TABLE_NAME,
+           C.COLUMN_NAME,
+           C.POSITION
+    FROM USER_CONS_COLUMNS C,
+         USER_CONSTRAINTS S
+    WHERE C.CONSTRAINT_NAME = S.CONSTRAINT_NAME
+    AND S.CONSTRAINT_TYPE = 'P'
+)
+SELECT L.TABLE_NAME AS "테이블명",
+       L.COLUMN_NAME AS "컬럼명",
+       L.DATA_TYPE AS "데이터타입",
+       L.DATA_LENGTH AS "길이",
+       CASE WHEN P.POSITION < 99 THEN 'Y'
+            ELSE ' '
+       END AS "PK",
+       L.NULLABLE AS "Null 여부",
+       L.COMMENTS AS "Comments"
+FROM LIST L,
+     PKLIST P
+WHERE L.TABLE_NAME = P.TABLE_NAME(+)
+  AND L.COLUMN_NAME = P.COLUMN_NAME(+)
+ ORDER BY L.TABLE_NAME,
+          NVL(P.POSITION, 99)
+;
+
+
 --=======================================================
 --datco계정 생성
 create user datco identified by datco
@@ -275,7 +308,7 @@ CREATE TABLE Tb_Message
     title varchar2(200) not null,
     msgContent varchar2(4000)  NOT NULL,
     sendDate DATE default sysdate NOT NULL,
-    readornot DATE default sysdate null,
+    readornot DATE null,
     constraint PK_Tb_message_no primary key(message_no),
     CONSTRAINT FK_Tb_Message_getUser_Tb_user FOREIGN KEY (getUser) REFERENCES Tb_user (userId) on delete set null,
     CONSTRAINT FK_Tb_Message_sendUser_Tb_user FOREIGN KEY (sendUser) REFERENCES Tb_user (userId) on delete set null

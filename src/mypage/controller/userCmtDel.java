@@ -2,7 +2,6 @@ package mypage.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,21 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import board.model.service.BoardService;
-import board.model.vo.BoardComment;
-import common.GradeTemplate;
-import mypage.model.vo.BlackList;
 
 /**
- * Servlet implementation class UserCmtListServlet
+ * Servlet implementation class userCmtDel
  */
-@WebServlet("/mypage/myCmtList")
-public class UserCmtListServlet extends HttpServlet {
+@WebServlet("/mypage/cmtDel")
+public class userCmtDel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserCmtListServlet() {
+    public userCmtDel() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +32,28 @@ public class UserCmtListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//유저가 작성한 댓글목록 출력하기
+		// TODO Auto-generated method stub
+		int cmtNo = Integer.parseInt(request.getParameter("cmtNo"));
 
-			String userId = request.getParameter("userId");
-			
-			// 유저의 블랙리스트 jsp 돌려주기
-			request.setAttribute("userId", userId);
-			request.getRequestDispatcher("/WEB-INF/views/mypage/userCmtList.jsp").forward(request, response);
-			
+		int result = new BoardService().boardCmtDel(cmtNo);
+		
+		String suc = null;
+		String gsonblist = null;
+		
+		if (result > 0) {
+			suc = "completed";
+			gsonblist = new Gson().toJson(suc);
+
+			PrintWriter out = response.getWriter();
+			out.write(gsonblist);
+
+		} else {
+			suc = "failed";
+			gsonblist = new Gson().toJson(suc);
+			PrintWriter out = response.getWriter();
+			out.write(gsonblist);
+		}
+	
 
 	}
 

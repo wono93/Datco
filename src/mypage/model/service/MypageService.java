@@ -1,18 +1,18 @@
 package mypage.model.service;
 
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.List;
 
-import board.model.service.BoardService;
-import board.model.vo.Board;
+import board.model.dao.BoardDAO;
 import mypage.model.dao.MypageDAO;
 import mypage.model.vo.BlackList;
 import mypage.model.vo.Point;
-import mypage.model.vo.PointLog;
 import mypage.model.vo.Scrap;
-import user.model.vo.User;
-
-import static common.JDBCTemplate.*;
 
 public class MypageService {
 
@@ -132,4 +132,18 @@ public class MypageService {
 		return pointResult;
 	}
 
+	public int selectMyBoardCount(String userId) {
+		Connection conn = getConnection();
+		int result = new BoardDAO().selectMyBoardCount(conn, userId);
+		close(conn);
+		return result;
+	}
+
+	public List<Scrap> selectScrapExist(String userId, int boardNo) {
+		// 스크랩 유무 조회용
+		Connection conn = getConnection();
+		List<Scrap> scrapList = new MypageDAO().selectScrapExist(conn, userId, boardNo);
+
+		return scrapList;
+	}
 }

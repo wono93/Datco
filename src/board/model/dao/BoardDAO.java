@@ -17,7 +17,7 @@ import board.model.vo.Board;
 import board.model.vo.BoardComment;
 import board.model.vo.DelBoard;
 import board.model.vo.SelectedComment;
-import mypage.model.dao.MypageDAO;
+import mypage.model.vo.BlackList;
 
 public class BoardDAO {
 
@@ -412,11 +412,19 @@ public class BoardDAO {
 		return result;
 	}
 
-	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage, String boardCode) {
+	public List<Board> selectBoardList(Connection conn, int cPage, int numPerPage, String boardCode, List<BlackList> blackList) {
 		List<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = prop.getProperty("selectBoardList");
+		String notLike = "";
+		if(blackList!=null && blackList.size()>0) {
+			notLike += " AND NOT REGEXP_LIKE (USERID, '"+blackList.get(0).getBlackId();
+			for (int i = 1; i < blackList.size(); i++) 
+				notLike += "|"+blackList.get(i).getBlackId();
+			notLike += "') ";
+		}
+		System.out.println(notLike);
 		try {
 			pstmt = conn.prepareStatement(query);
 			// 시작 rownum과 마지막 rownum 구하는 공식
@@ -812,4 +820,93 @@ public class BoardDAO {
 		return list;
 	}
 
+	public int selectMyBoardCount(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String query = prop.getProperty("selectMyBoardCount");
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			while (rset.next())
+				result = Integer.parseInt(rset.getString("COUNT(*)"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<Board> selectMyBoardList(Connection conn, int cPage, int numPerPage, String userId) {
+		List<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectMyBoardList");
+		try {
+			pstmt = conn.prepareStatement(query);
+			// 시작 rownum과 마지막 rownum 구하는 공식
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, (cPage - 1) * numPerPage + 1);
+			pstmt.setInt(3, cPage * numPerPage);
+			rset = pstmt.executeQuery();
+			System.out.println("query");
+			while (rset.next()) {
+				Board b = new Board();
+				b.setBoardWriter(rset.getString("userId"));
+				b.setBoardOption(rset.getString("boardOption"));
+				b.setBoardTitle(rset.getString("boardTitle"));
+				b.setBoardCode(rset.getString("boardCode"));
+				b.setBoardRegDate(rset.getDate("boardRegDate"));
+				list.add(b);
+				System.out.println(b);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<BoardComment> selectBoardCommentWriter(Connection conn, String userId) {
+		List<BoardComment> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("selectBoardCommentWriter");
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			
+			System.out.println("query");
+			while (rset.next()) {
+				BoardComment c = new BoardComment();
+				c.setCmtNo(rset.getInt("cmtNo"));
+				c.setCmtWriter(rset.getString("userId"));
+				c.setBoardNo(rset.getInt("board_No"));
+				c.setCmtLevel(rset.getInt("cmtLevel"));
+				c.setCmtContent(rset.getString("cmtContent"));
+				c.setCmtRegDate(rset.getDate("cmtregDate"));
+				c.setReported(rset.getInt("reported"));
+				c.setCmtWriterGrade(rset.getString("userGrade"));
+				c.setBoardCode(rset.getString("boardCode"));
+				c.setBoardTitle(rset.getString("boardTitle"));
+				list.add(c);
+				System.out.println(c);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }
