@@ -30,7 +30,7 @@ section#content { float: none; width: 100%; min-height: 645px; margin-top: 40px;
 		padding-top: 0; width: calc(100% + 24px); }
 article{ flex-basis: 45%; text-align: center; display: table; border: 3px solid rgba(51, 122, 183, 0.4); border-radius: 10px; flex-grow: 1;
     flex-shrink: 1; margin-left: 12px; margin-right: 12px; margin-top: 24px; min-width: 0;}
-div#col-1st {font-size: 2em; color: black; display: inline-flex;}
+div#col-1st {font-size: 2em; color: black; display: inline-flex; padding-top: 30px;}
 
 </style>
 
