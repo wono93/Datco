@@ -76,7 +76,7 @@ public class BoardReportServlet extends HttpServlet {
 					return;
 				}
 			}
-			errorMsg(request, response, "/board/boardLise?boardCode="+boardCode, "신고가 정상적으로 처리되었습니다.");
+			errorMsg(request, response, "/board/boardList?boardCode="+boardCode, "신고가 정상적으로 처리되었습니다.");
 		} else if(request.getParameter("cmtNo") != null) {
 			//boardView?boardNo 호출용
 			int boardNo2 = Integer.parseInt(request.getParameter("boardNo2"));

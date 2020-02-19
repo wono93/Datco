@@ -213,7 +213,7 @@
 				<span style="font-size: 2.3em;"><%=b.getBoardWriter()%></span>
 			</a>
 		<% } else { %>
-				<img src="<%=request.getContextPath()%>/images/none.png" alt="" width="30px" style="padding-bottom: 10px;"/>
+				<img src="<%=request.getContextPath()%>/images/<%=b.getBoardWriterGrade() %>" alt="" width="30px" style="padding-bottom: 10px;"/>
 				<span style="font-size: 2.3em;"><%=b.getBoardWriter()%></span>
 		<% } %>
 	</div>
